@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.kruko.PracaInz.models.Diagnosis;
-import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Visit;
 import pl.kruko.PracaInz.repo.DiagnosisRepository;
 
