@@ -14,7 +14,6 @@ import pl.kruko.PracaInz.repo.PatientRepository;
 @Service
 public class PatientService {
 	private PatientRepository patientRepository;
-	private Patient patient;
 	@Autowired
 	private UserService userService;
 
@@ -25,14 +24,15 @@ public class PatientService {
 	}
 	
 	public Patient findById(Long id) {
-		patient = patientRepository.findById(id).orElse(new Patient());
+		Patient patient = patientRepository.findById(id).orElse(new Patient());
 		return patient;
 	}
 	
 	public Patient findByUser(String login) {
 		User user = userService.findByLogin(login);
 		System.out.println(user);
-		return patientRepository.findByUser(user);
+		Patient patient = patientRepository.findByUser(user);
+		return patient;
 	}
 	
 	public Patient findByCurrentUser(HttpServletRequest request) {

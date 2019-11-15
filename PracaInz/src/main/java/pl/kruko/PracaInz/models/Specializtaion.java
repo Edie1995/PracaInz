@@ -7,15 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity (name = "Specjaliztaion")
-@Table (name = "specjaliztaions")
+@Entity(name = "Specjaliztaion")
+@Table(name = "specjaliztaions")
 public class Specializtaion {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@Column(unique = true)
 	private String name;
-	
+
 	public Specializtaion() {
 		// TODO Auto-generated constructor stub
 	}
@@ -40,6 +40,5 @@ private Long id;
 //	public String toString() {
 //		return "Specializtaion [id=" + id + ", name=" + name + "]";
 //	}
-	
-	
+
 }

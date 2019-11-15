@@ -23,7 +23,6 @@ public class VisitService {
 
 	public Visit findByPatient(String login) {
 		Patient patient =  patientService.findByUser(login);
-		System.out.println(patient);
 		return visitRepository.findByPatient(patient);
 	}
 }

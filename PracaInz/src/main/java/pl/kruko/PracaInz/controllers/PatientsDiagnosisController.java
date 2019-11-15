@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.kruko.PracaInz.models.Diagnosis;
+import dataTransferObjects.DiagnosisDTO;
 import pl.kruko.PracaInz.service.DiagnosisService;
 
 @RestController
 public class PatientsDiagnosisController {
 
 	private DiagnosisService diagnosisService;
+
 
 	@Autowired
 	public PatientsDiagnosisController(DiagnosisService diagnosisService) {
@@ -28,19 +29,19 @@ public class PatientsDiagnosisController {
 
 	@GetMapping("pateintDiagnosis")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<Diagnosis> showAllDiagnosis(HttpServletRequest request) {
+	public List<DiagnosisDTO> showAllDiagnosis(HttpServletRequest request) {
 		String login = currentUserNameSimple(request);
-		List<Diagnosis> diagnosis = diagnosisService.findByVisit(login);
-		return diagnosis;
+		List<DiagnosisDTO> diagnosisDTO = diagnosisService.findByVisit(login);
+		return diagnosisDTO;
 
 	}
 
 	@GetMapping("pateintDiagnosis/{name}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<Diagnosis> showDiagnosisByName(HttpServletRequest request, @PathVariable String name) {
+	public List<DiagnosisDTO> showDiagnosisByName(HttpServletRequest request, @PathVariable String name) {
 		String login = currentUserNameSimple(request);
-		List<Diagnosis> diagnosis = diagnosisService.findByVisitAndName(login, name);
-		return diagnosis;
+		List<DiagnosisDTO> diagnosisDTO = diagnosisService.findByVisitAndName(login, name);
+		return diagnosisDTO;
 	}
 
 	public String currentUserNameSimple(HttpServletRequest request) {
