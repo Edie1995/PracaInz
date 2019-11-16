@@ -1,5 +1,7 @@
 package pl.kruko.PracaInz.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,9 @@ public class VisitService {
 		this.visitRepository = visitRepository;
 	}
 
-	public Visit findByPatient(String login) {
+	public List<Visit> findByPatient(String login) {
 		Patient patient =  patientService.findByUser(login);
+		System.out.println(patient);
 		return visitRepository.findByPatient(patient);
 	}
 }

@@ -1,6 +1,7 @@
 package pl.kruko.PracaInz.service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -30,9 +31,12 @@ public class DiagnosisService {
 	}
 	
 	public List<DiagnosisDTO> findByVisit(String login){
-		Visit visit = visitService.findByPatient(login);
-		System.out.println(visit);
-		List<Diagnosis> diagnosis = diagnosisRepository.findByVisit(visit);
+		List<Visit> visits = visitService.findByPatient(login);
+		System.out.println(visits);
+		List<Diagnosis> diagnosis = new ArrayList<>();
+		for(Visit v: visits) {
+		diagnosis.addAll(diagnosisRepository.findByVisit(v));
+		}
 		List<DiagnosisDTO> diagnosisDTO = modelMapper.map(diagnosis, listType);
 		System.out.println(diagnosis);
 		return diagnosisDTO;
@@ -40,8 +44,11 @@ public class DiagnosisService {
 	}
 	
 	public List<DiagnosisDTO> findByVisitAndName(String login, String name){
-		Visit visit = visitService.findByPatient(login);
-		List<Diagnosis> diagnosis =diagnosisRepository.findByVisitAndName(visit, name);
+		List<Visit> visits = visitService.findByPatient(login);
+		List<Diagnosis> diagnosis = new ArrayList<>();
+		for(Visit v: visits) {
+			diagnosis.addAll(diagnosisRepository.findByVisitAndName(v, name));
+		}
 		List<DiagnosisDTO> diagnosisDTO = modelMapper.map(diagnosis, listType);
 		System.out.println(diagnosis);
 		return diagnosisDTO;

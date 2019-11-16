@@ -27,7 +27,7 @@ public class PatientsDiagnosisController {
 		this.diagnosisService = diagnosisService;
 	}
 
-	@GetMapping("pateintDiagnosis")
+	@GetMapping("patientDiagnosis")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public List<DiagnosisDTO> showAllDiagnosis(HttpServletRequest request) {
 		String login = currentUserNameSimple(request);
@@ -36,7 +36,7 @@ public class PatientsDiagnosisController {
 
 	}
 
-	@GetMapping("pateintDiagnosis/{name}")
+	@GetMapping("patientDiagnosis/{name}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public List<DiagnosisDTO> showDiagnosisByName(HttpServletRequest request, @PathVariable String name) {
 		String login = currentUserNameSimple(request);
