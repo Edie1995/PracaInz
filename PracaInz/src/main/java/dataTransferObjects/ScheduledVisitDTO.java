@@ -1,6 +1,6 @@
 package dataTransferObjects;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.Institution;
@@ -11,7 +11,7 @@ import pl.kruko.PracaInz.models.VisitType;
 public class ScheduledVisitDTO {
 
 	private Long id;
-	private Date date;
+	private LocalDateTime date;
 	private Visit visit;
 	private VisitType visitType;
 	private Doctor doctor;
@@ -21,6 +21,18 @@ public class ScheduledVisitDTO {
 	public ScheduledVisitDTO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public ScheduledVisitDTO(LocalDateTime date, VisitType visitType, Doctor doctor, Institution institution,
+			Patient patient) {
+		super();
+		this.date = date;
+		this.visitType = visitType;
+		this.doctor = doctor;
+		this.institution = institution;
+		this.patient = patient;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -30,11 +42,11 @@ public class ScheduledVisitDTO {
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

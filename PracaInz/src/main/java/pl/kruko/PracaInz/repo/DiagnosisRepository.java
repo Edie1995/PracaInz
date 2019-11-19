@@ -11,7 +11,6 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
 
 	List<Diagnosis> findByVisit(Visit visit);
 
-	List<Diagnosis> findByVisitAndName(Visit visit, String name);
-	
+	List<Diagnosis> findByVisitAndName(Visit visit, String name);	
 
 }

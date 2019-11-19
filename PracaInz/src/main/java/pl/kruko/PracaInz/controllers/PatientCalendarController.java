@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import dataTransferObjects.DoctorDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import pl.kruko.PracaInz.service.ScheduledVisitService;
+import pl.kruko.PracaInz.service.SymptomService;
 
 @RestController
 public class PatientCalendarController {
@@ -40,7 +44,8 @@ public class PatientCalendarController {
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public List<ScheduledVisitDTO> showEventsByDate(HttpServletRequest request, @PathVariable String date) {
 		String login = currentUserNameSimple(request);
-		List<ScheduledVisitDTO> scheduledVisitDTO = scheduledVisitService.findByPatientAndDate(login, LocalDate.parse(date));
+		List<ScheduledVisitDTO> scheduledVisitDTO = scheduledVisitService.findByPatientAndDate(login,
+				LocalDate.parse(date));
 		System.out.println(scheduledVisitDTO);
 		return scheduledVisitDTO;
 	}
@@ -55,10 +60,19 @@ public class PatientCalendarController {
 
 	@GetMapping("patientCalendar/all/{type}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<ScheduledVisitDTO> showEventsByType(HttpServletRequest request, @PathVariable int type){
+	public List<ScheduledVisitDTO> showEventsByType(HttpServletRequest request, @PathVariable int type) {
 		String login = currentUserNameSimple(request);
 		List<ScheduledVisitDTO> scheduledVisitDTO = scheduledVisitService.findByPatientAndType(login, type);
 		return scheduledVisitDTO;
+	}
+
+	@PostMapping("patientCalendar/addEvent")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public void addEvent(HttpServletRequest request, @PathVariable String VisitTypeName, @PathVariable String date,
+			@RequestBody DoctorDTO doctorDTO) {
+		String login = currentUserNameSimple(request);
+		// scheduledVisitService.addNewEvent(login, VisitTypeName, institutionDTO,
+		// doctorDTO, date);
 	}
 
 	public String currentUserNameSimple(HttpServletRequest request) {

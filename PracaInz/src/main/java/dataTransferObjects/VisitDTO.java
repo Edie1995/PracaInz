@@ -47,6 +47,12 @@ public class VisitDTO {
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+
+	@Override
+	public String toString() {
+		return "VisitDTO [id=" + id + ", date=" + date + ", patient=" + patient + ", doctor=" + doctor + "]";
+	}
+	
 	
 	
 	

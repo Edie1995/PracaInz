@@ -1,6 +1,7 @@
 package pl.kruko.PracaInz.controllers;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,6 @@ public class PatientsDiagnosisController {
 
 	private DiagnosisService diagnosisService;
 
-	private String name = null;
-
 	@Autowired
 	public PatientsDiagnosisController(DiagnosisService diagnosisService) {
 		super();
@@ -37,11 +36,20 @@ public class PatientsDiagnosisController {
 
 	}
 
-	@GetMapping("patientDiagnosis/{name}")
+	@GetMapping("patientDiagnosis/name/{name}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public List<DiagnosisDTO> showDiagnosisByName(HttpServletRequest request,@PathVariable String name) {
 		String login = currentUserNameSimple(request);
 		List<DiagnosisDTO> diagnosisDTO = diagnosisService.findByVisitAndName(login, name);
+		System.out.println(diagnosisDTO);
+		return diagnosisDTO;
+	}
+	
+	@GetMapping("patientDiagnosis/between/{startDate}/{endDate}")
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public List<DiagnosisDTO> showDiagnosisBetweenDates(HttpServletRequest request,@PathVariable String startDate, @PathVariable String endDate) {
+		String login = currentUserNameSimple(request);
+		List<DiagnosisDTO> diagnosisDTO = diagnosisService.findByVisitAndDate(login, startDate, endDate);
 		System.out.println(diagnosisDTO);
 		return diagnosisDTO;
 	}

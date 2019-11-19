@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.PatientsMedicamentDTO;
+import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Medicament;
 import pl.kruko.PracaInz.models.PatientsMedicament;
 import pl.kruko.PracaInz.models.Status;
@@ -54,7 +55,10 @@ public class PatientsMedicamentService {
 	}
 
 	public List<Visit> getVisit(String login) {
-		List<Visit> visits = visitService.findByPatient(login);
+		List<VisitDTO> visitsDTO = visitService.findByPatient(login);
+		Type listTypeVisit = new TypeToken<List<VisitDTO>>() {
+		}.getType();
+		List<Visit> visits = modelMapper.map(visitsDTO, listTypeVisit);
 		return visits;
 	}
 

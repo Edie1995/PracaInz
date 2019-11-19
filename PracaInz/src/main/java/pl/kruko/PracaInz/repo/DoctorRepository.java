@@ -12,9 +12,9 @@ import pl.kruko.PracaInz.models.Specialization;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
 
-	Optional<Doctor> findByLogin (String login);
+	Optional<Doctor> findById (Long id);
 	
-	@Query("SELECT d FROM Doctor d WHERE (:name is null or d.name = name) and (:specialization is null or d.specialization = :specialization) and (:institution is null oraz d.institution = :institution)")
-	List<Doctor> findByNameAndSpecializationAndCityAndInstitution(String name, Specialization specialization, Institution institution);
+	@Query("SELECT d FROM Doctor d WHERE (:lastName is null or d.lastName = lastName) and (:specialization is null or d.specialization = :specialization) and (:institutions is null or d.institutions = :institutions)")
+	List<Doctor> findByNameAndSpecializationAndCityAndInstitution(String lastName, Specialization specialization, List<Institution> institutions);
 	
 }
