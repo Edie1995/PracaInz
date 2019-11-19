@@ -18,6 +18,7 @@ public class Institution {
 	private Long id;
 	@Column(unique = true)
 	private String name;
+	private String city;
 	private String adress;
 	@Column(nullable = true)
 	private Long phoneNumber;
@@ -43,6 +44,14 @@ public class Institution {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getAdress() {

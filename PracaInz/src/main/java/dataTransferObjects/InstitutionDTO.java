@@ -8,11 +8,12 @@ public class InstitutionDTO {
 
 	private Long id;
 	private String name;
+	private String city;
 	private String adress;
 	private Long phoneNumber;
 	private String status;
 	private List<Doctor> doctors;
-	
+
 	public InstitutionDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -31,6 +32,14 @@ public class InstitutionDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getAdress() {
@@ -64,6 +73,5 @@ public class InstitutionDTO {
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
-	
-	
+
 }

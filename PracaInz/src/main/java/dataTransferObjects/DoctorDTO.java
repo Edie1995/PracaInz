@@ -3,7 +3,7 @@ package dataTransferObjects;
 import java.util.List;
 
 import pl.kruko.PracaInz.models.Institution;
-import pl.kruko.PracaInz.models.Specializtaion;
+import pl.kruko.PracaInz.models.Specialization;
 import pl.kruko.PracaInz.models.Status;
 import pl.kruko.PracaInz.models.User;
 
@@ -11,7 +11,7 @@ public class DoctorDTO {
 	private Long id;
 	private int telephoneNumber;
 	private Status status;
-	private Specializtaion specializtaion;
+	private Specialization specializtaion;
 	private List<Institution> institutions;
 	private User user;
 	
@@ -42,11 +42,11 @@ public class DoctorDTO {
 		this.status = status;
 	}
 
-	public Specializtaion getSpecializtaion() {
+	public Specialization getSpecializtaion() {
 		return specializtaion;
 	}
 
-	public void setSpecializtaion(Specializtaion specializtaion) {
+	public void setSpecializtaion(Specialization specializtaion) {
 		this.specializtaion = specializtaion;
 	}
 

@@ -26,7 +26,7 @@ public class Doctor extends Person{
 	private int telephoneNumber;
 	private Status status;
 	@ManyToOne
-	private Specializtaion specializtaion;
+	private Specialization specializtaion;
 	@ManyToMany(mappedBy = "doctors")
 	private List<Institution> institutions;
 	@OneToOne(mappedBy="doctor", fetch = FetchType.LAZY,
@@ -55,10 +55,10 @@ public class Doctor extends Person{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public Specializtaion getSpecializtaion() {
+	public Specialization getSpecializtaion() {
 		return specializtaion;
 	}
-	public void setSpecializtaion(Specializtaion specializtaion) {
+	public void setSpecializtaion(Specialization specializtaion) {
 		this.specializtaion = specializtaion;
 	}
 	public List<Institution> getInstitutions() {

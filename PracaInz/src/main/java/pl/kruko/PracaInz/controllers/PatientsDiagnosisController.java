@@ -20,6 +20,7 @@ public class PatientsDiagnosisController {
 
 	private DiagnosisService diagnosisService;
 
+	private String name = null;
 
 	@Autowired
 	public PatientsDiagnosisController(DiagnosisService diagnosisService) {
@@ -38,9 +39,10 @@ public class PatientsDiagnosisController {
 
 	@GetMapping("patientDiagnosis/{name}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<DiagnosisDTO> showDiagnosisByName(HttpServletRequest request, @PathVariable String name) {
+	public List<DiagnosisDTO> showDiagnosisByName(HttpServletRequest request,@PathVariable String name) {
 		String login = currentUserNameSimple(request);
 		List<DiagnosisDTO> diagnosisDTO = diagnosisService.findByVisitAndName(login, name);
+		System.out.println(diagnosisDTO);
 		return diagnosisDTO;
 	}
 
@@ -50,5 +52,7 @@ public class PatientsDiagnosisController {
 		System.out.println(login);
 		return login;
 	}
+	
+	
 
 }

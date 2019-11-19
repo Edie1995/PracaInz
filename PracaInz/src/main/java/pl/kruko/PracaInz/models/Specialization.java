@@ -9,14 +9,14 @@ import javax.persistence.Table;
 
 @Entity(name = "Specjaliztaion")
 @Table(name = "specjaliztaions")
-public class Specializtaion {
+public class Specialization {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true)
 	private String name;
 
-	public Specializtaion() {
+	public Specialization() {
 		// TODO Auto-generated constructor stub
 	}
 
