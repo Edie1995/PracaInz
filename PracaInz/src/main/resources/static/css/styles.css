@@ -1,0 +1,247 @@
+html {
+    /* position: relative; */
+    background: #FEFBD8;
+    height: fit-content;
+}
+
+
+.inputButtons {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    text-align: center;
+
+    /* float: center; */
+}
+
+.inputButtons li {
+    position: relative;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    /* width: 40%; */
+    margin: 20px 5%;
+
+
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+form input.button {
+    width: 375px;
+    height: 95px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), #618685;
+
+    font-family: Nova Flat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+
+    color: #FEFBD8;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+form input.fields {
+    text-align: center;
+    width: 375px;
+    height: 51px;
+    color: #000000;
+    font-size: 25px;
+    background: #ffffff;
+}
+
+header {
+    background-color: #392B35;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 60px;
+}
+
+header {
+    position: fixed;
+    display: inline-block;
+    text-align: left;
+
+}
+
+header img {
+    color: white;
+    position: relative;
+    width: 61px;
+    height: 56px;
+    left: 0;
+    top: 0;
+}
+
+h1 {
+    position: relative;
+    top: 70px;
+    font-family: Nova Flat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 42px;
+    line-height: 51px;
+    text-align: center;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+div.helloImg {
+    position: relative;
+    text-align: right;
+    /* height: 761px; */
+}
+
+.helloImg img {
+    display: inline-block;
+    position: relative;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+
+}
+
+
+
+footer {
+    background: #392B35;
+    padding: 10px;
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    text-align: right;
+    margin-top: auto;
+    width: 100%;
+    color: #FEFBD8;
+
+}
+
+main.pateintHomePage img {
+    position: absolute;
+    left: -200px;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    top: 561px;
+    text-align: left;
+    height: 359px;
+
+
+}
+
+.homeCheckList {
+    position: fixed;
+    top: 84px;
+    left: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+.homeCheckList li {
+    display: inline-block;
+    width: 283px;
+    height: 79px;
+    text-align: left;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), #618685;
+}
+
+main.pateintHomePage {
+    position: relative;
+    left: 150px;
+    max-width: 80%;
+    width: 1200px;
+    margin: 80px auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+main p {
+    position: absolute;
+    top: 150px;
+
+    width: 80%;
+    text-align: justify;
+    margin: 2px;
+
+}
+
+p.text {
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    color: #392B35;
+    /* padding: 20px; */
+}
+
+.homeCheckList li a {
+
+    text-decoration: none;
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 0;
+    display: block;
+    margin-top: 20px;
+    color: #FEFBD8;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+header ul {
+    display: inline;
+    position: absolute;
+    top: 0;
+    right: 0%;
+    padding: 10px;
+    margin: 20px 5%;
+    white-space: nowrap;
+}
+
+header ul li {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+header ul li a {
+    text-decoration: none;
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: right;
+
+
+
+    color: #FEFBD8;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

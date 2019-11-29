@@ -2,6 +2,7 @@ package pl.kruko.PracaInz.controllers;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dataTransferObjects.DoctorDTO;
+import dataTransferObjects.InstitutionDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import pl.kruko.PracaInz.service.ScheduledVisitService;
 import pl.kruko.PracaInz.service.SymptomService;
@@ -45,7 +47,7 @@ public class PatientCalendarController {
 	public List<ScheduledVisitDTO> showEventsByDate(HttpServletRequest request, @PathVariable String date) {
 		String login = currentUserNameSimple(request);
 		List<ScheduledVisitDTO> scheduledVisitDTO = scheduledVisitService.findByPatientAndDate(login,
-				LocalDate.parse(date));
+				LocalDateTime.parse(date));
 		System.out.println(scheduledVisitDTO);
 		return scheduledVisitDTO;
 	}
@@ -68,11 +70,10 @@ public class PatientCalendarController {
 
 	@PostMapping("patientCalendar/addEvent")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public void addEvent(HttpServletRequest request, @PathVariable String VisitTypeName, @PathVariable String date,
-			@RequestBody DoctorDTO doctorDTO) {
+	public void addEvent(HttpServletRequest request, @PathVariable String VisitTypeName, @PathVariable String date, @PathVariable String idDoctor, @PathVariable String idInstitution) {
 		String login = currentUserNameSimple(request);
-		// scheduledVisitService.addNewEvent(login, VisitTypeName, institutionDTO,
-		// doctorDTO, date);
+		 scheduledVisitService.addNewEvent(login, VisitTypeName, idDoctor,
+		 idInstitution, date);
 	}
 
 	public String currentUserNameSimple(HttpServletRequest request) {

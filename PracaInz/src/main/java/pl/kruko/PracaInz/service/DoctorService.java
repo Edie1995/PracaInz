@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import dataTransferObjects.DoctorDTO;
 import pl.kruko.PracaInz.models.Doctor;
@@ -12,10 +14,14 @@ import pl.kruko.PracaInz.models.Institution;
 import pl.kruko.PracaInz.models.Specialization;
 import pl.kruko.PracaInz.repo.DoctorRepository;
 
+@Service
 public class DoctorService {
 	
+	@Autowired
 	private DoctorRepository doctorRepository;
+	@Autowired
 	private SpecializationService specializationService;
+	
 	
 	public DoctorService(DoctorRepository doctorRepository) {
 		super();
@@ -31,6 +37,10 @@ public class DoctorService {
 		List<Doctor> doctors = doctorRepository.findByNameAndSpecializationAndCityAndInstitution(lastName, specialization, institutions);
 		List<DoctorDTO> doctorsDTO = modelMapper.map(doctors, listType);
 		return doctorsDTO;
+	}
+	
+	public Doctor findById(Long id) {
+		return doctorRepository.findById(id).orElse(null);
 	}
 	
 	

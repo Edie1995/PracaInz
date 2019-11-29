@@ -28,6 +28,10 @@ public class ScheduledVisitService {
 	private PatientService patientService;
 	@Autowired
 	private VisitTypeService visitTypeService;
+	@Autowired
+	private DoctorService doctorService;
+	@Autowired
+	private InstitutionService institutionService;
 
 	@Autowired
 	private ScheduledVisitRepository scheduledVisitRepository;
@@ -55,7 +59,7 @@ public class ScheduledVisitService {
 		return scheduledVisitDTO;
 	}
 
-	public List<ScheduledVisitDTO> findByPatientAndDate(String login, LocalDate date) {
+	public List<ScheduledVisitDTO> findByPatientAndDate(String login, LocalDateTime date) {
 		Patient patient = getPatient(login);
 		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatientAndDate(patient, date);
 		System.out.println(scheduledVisits);
@@ -91,18 +95,23 @@ public class ScheduledVisitService {
 			LocalDateTime dateTime) {
 		ScheduledVisitDTO scheduledVisitDTO = new ScheduledVisitDTO(dateTime, visitType, doctor, institution, patient);
 		ScheduledVisit scheduledVisit = modelMapper.map(scheduledVisitDTO, ScheduledVisit.class);
+		System.out.println(scheduledVisit);
 		scheduledVisitRepository.save(scheduledVisit);
 
 	}
 
-	public void addNewEvent(String login, String VisitTypeName, InstitutionDTO institutionDTO, DoctorDTO doctorDTO,
+	public void addNewEvent(String login, String VisitTypeName, String institutionId, String doctorId,
 			String date) {
 		LocalDateTime dateTime = LocalDateTime.parse(date);
 		Patient patient = getPatient(login);
-		Institution institution = modelMapper.map(institutionDTO, Institution.class);
 		VisitType visitType = visitTypeService.findByName(VisitTypeName);
-		Doctor doctor = modelMapper.map(doctorDTO, Doctor.class);
-		addNewScheduledVisit(patient, visitType, institution, doctor, dateTime);
+		Doctor doctor = doctorService.findById(Long.parseLong(doctorId));
+		Institution institution = institutionService.findById(Long.parseLong(institutionId));
+		if(findByPatientAndDate(login, dateTime).isEmpty()) {
+		addNewScheduledVisit(patient, visitType, institution, doctor, dateTime);}
+		else {
+			System.out.println("zaklepane");
+		}
 
 	}
 

@@ -1,10 +1,12 @@
 package pl.kruko.PracaInz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import pl.kruko.PracaInz.models.Specialization;
 import pl.kruko.PracaInz.repo.SpecializationRepository;
 
+@Service
 public class SpecializationService {
 
 	private SpecializationRepository specializationRepository;
