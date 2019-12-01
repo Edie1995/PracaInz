@@ -13,27 +13,25 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-@Entity (name = "PatientSymptom")
-@Table (name = "patient_symptoms")
+@Entity(name = "PatientSymptom")
+@Table(name = "patient_symptoms")
 public class PatientSymptom {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate date;
-	@ManyToOne (cascade =  CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Patient patient;
-	@ManyToOne (cascade =  CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Symptom symptom;
 	@ManyToOne(optional = true)
 	private Visit visit;
-	
+
 	public PatientSymptom() {
 	}
-	
-	
-	
+
 	public PatientSymptom(LocalDate date, Patient patient, Symptom symptom) {
 		super();
 		this.date = date;
@@ -41,9 +39,7 @@ public class PatientSymptom {
 		this.symptom = symptom;
 	}
 
-
-
-	public PatientSymptom( Long id, LocalDate date, Patient patient, Symptom symptom) {
+	public PatientSymptom(Long id, LocalDate date, Patient patient, Symptom symptom) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -61,28 +57,34 @@ public class PatientSymptom {
 	}
 
 
-
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public LocalDate getDate() {
 		return date;
 	}
+
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
 	public Patient getPatient() {
 		return patient;
 	}
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
 	public Symptom getSymptom() {
 		return symptom;
 	}
+
 	public void setSymptom(Symptom symptom) {
 		this.symptom = symptom;
 	}
@@ -92,7 +94,5 @@ public class PatientSymptom {
 		return "PatientSymptom [id=" + id + ", date=" + date + ", patient=" + patient + ", symptom=" + symptom
 				+ ", visit=" + visit + "]";
 	}
-	
-	
 
 }

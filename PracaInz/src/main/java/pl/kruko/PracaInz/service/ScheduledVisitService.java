@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import dataTransferObjects.DoctorDTO;
 import dataTransferObjects.InstitutionDTO;
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import dataTransferObjects.VisitTypeDTO;
 import pl.kruko.PracaInz.models.Doctor;
@@ -87,8 +88,8 @@ public class ScheduledVisitService {
 	}
 
 	public Patient getPatient(String login) {
-		Patient patient = patientService.findByUser(login);
-		return patient;
+		PatientDTO patientDTO = patientService.findByUser(login);
+		return modelMapper.map(patientDTO, Patient.class);
 	}
 
 	public void addNewScheduledVisit(Patient patient, VisitType visitType, Institution institution, Doctor doctor,

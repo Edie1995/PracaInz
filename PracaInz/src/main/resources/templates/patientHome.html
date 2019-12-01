@@ -11,7 +11,7 @@
 <body>
     <header><img src="css/img/logo.png" alt="application logo">
         <ul>
-            <li><a href="">Profil</a></li>
+            <li><a th:href="@{/profilePatient.html}">Profil</a></li>
             <li><a th:href="@{/logout}">Wyloguj</a></li>
         </ul>
 
@@ -20,7 +20,7 @@
     <div>
         <ul class="homeCheckList">
 
-            <li> <a th:href="@{/bad}">Obajwy</a> </li>
+            <li> <a th:href="@{/homeSymptoms.html}">Obajwy</a> </li>
             <li><a href="">Badania</a></li>
             <li><a href="">Kalendarz</a></li>
             <li><a href="">Historia chorób</a></li>
@@ -55,9 +55,10 @@
             earum
             architecto sit omnis esse nemo. Autem adipisci quasi debitis cupiditate dignissimos eius provident in.
         </p>
-        <img src="css/img/patientHome.png" alt="pacjent strona startowa">
+        
 
     </main>
+    <img class="start" src="css/img/patientHome.png" alt="pacjent strona startowa">
 
     <!-- <footer>
         <p class="copywright">

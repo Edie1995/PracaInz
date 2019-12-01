@@ -15,24 +15,27 @@
 	<h1>
 		Witaj <br> w systemie wspomagaj¹cym <br> Twoje zdrowie!
 	</h1>
-	<main>
-		<div class="helloImg">
-			<img src="css/img/witaj.png" alt="hello image">
-			<p th:if="${loginError}" class="error">Wrong username or password</p>
-			<form class="inputButtons" th:action="@{/login.html}" method="post">
-				<ul>
-					<li><input class="fields" type="text" id="username" name="username"
-						autofocus="autofocus" placeholder="Type your login" required></li>
-					<li><input class="fields" type="password" id="password"
-						name="password" placeholder="Type your password" required></li>
-					<li><input class="button" type="submit" value="zaloguj"
-						id="logIn"></li>
-					<li><input class="button" type="submit" value="zarejestruj"
-						id="register"></li>
-				</ul>
-			</form>
-		</div>
+	<main class="helloImg">
+		<p th:if="${loginError}" class="error">Wrong username or password</p>
+		<form class="inputButtons" th:action="@{/login.html}" method="post">
+			<ul>
+				<li><input class="fields" type="text" id="username"
+					name="username" autofocus="autofocus" placeholder="Type your login"
+					required></li>
+				<li><input class="fields" type="password" id="password"
+					name="password" placeholder="Type your password" required></li>
+				<li><input class="button" type="submit" value="zaloguj"
+					id="logIn"></li>
+			</ul>
+		</form>
+		<form class="register" th:action="@{/login.html}" method="post">
+		<ul class="register">
+			<li><input class="button" type="submit" value="zarejestruj"
+				id="register"></li>
+		</ul>
+		</form>
 	</main>
+	<img class="login" src="css/img/witaj.png" alt="hello image">
 	<footer>
 		<p class="copywright">Copywright Krukowska 2019</p>
 	</footer>

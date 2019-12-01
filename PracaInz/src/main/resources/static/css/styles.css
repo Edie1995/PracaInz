@@ -24,9 +24,29 @@ html {
     display: inline-block;
     text-align: center;
     /* width: 40%; */
-    margin: 20px 5%;
+    margin: 10px 5%;
 
 
+}
+
+.register{
+	position: absolute;
+    top: 70%;
+    left: 25%;
+    text-align: center;
+}
+
+.register li{
+	position: relative;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    /* width: 40%; */
+    margin: 10px 5%;
 }
 
 ul {
@@ -35,16 +55,16 @@ ul {
     flex-wrap: wrap;
 }
 
-form input.button {
-    width: 375px;
-    height: 95px;
+.button {
+   width: 260px;
+    height: 50px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), #618685;
 
-    font-family: Nova Flat;
+    font-family: Trebuchet MS;
     font-style: normal;
     font-weight: normal;
-    font-size: 32px;
+    font-size: 18px;
     line-height: 39px;
     text-align: center;
     margin-left: 0;
@@ -57,10 +77,10 @@ form input.button {
 
 form input.fields {
     text-align: center;
-    width: 375px;
-    height: 51px;
+    width: 260px;
+    height: 50px;
     color: #000000;
-    font-size: 25px;
+    font-size: 18px;
     background: #ffffff;
 }
 
@@ -73,7 +93,7 @@ header {
     z-index: 1;
     top: 0;
     left: 0;
-    height: 60px;
+    height: 40px;
 }
 
 header {
@@ -86,16 +106,48 @@ header {
 header img {
     color: white;
     position: relative;
-    width: 61px;
-    height: 56px;
+    /* width: 61px; */
+    height: 40px;
     left: 0;
     top: 0;
+}
+
+header ul {
+    display: inline;
+    position: absolute;
+    top: 0;
+    right: 0%;
+    padding: 10px;
+    margin: 10px 5%;
+    white-space: nowrap;
+}
+
+header ul li {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+header ul li a {
+    text-decoration: none;
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 39px;
+    text-align: right;
+
+
+
+    color: #FEFBD8;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 h1 {
     position: relative;
     top: 70px;
-    font-family: Nova Flat;
+    font-family: Trebuchet MS;
     font-style: normal;
     font-weight: normal;
     font-size: 42px;
@@ -113,11 +165,6 @@ div.helloImg {
 
 .helloImg img {
     display: inline-block;
-    position: relative;
-    left: 0%;
-    right: 0%;
-    top: 0%;
-    bottom: 0%;
 
 }
 
@@ -152,7 +199,7 @@ main.pateintHomePage img {
 
 .homeCheckList {
     position: fixed;
-    top: 84px;
+    top: 64px;
     left: 0;
     padding: 0;
     z-index: 1;
@@ -160,11 +207,35 @@ main.pateintHomePage img {
 
 .homeCheckList li {
     display: inline-block;
-    width: 283px;
-    height: 79px;
+    width: 220px;
+    height: 50px;
     text-align: left;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%), #618685;
+}
+
+.homeCheckList li a {
+
+    text-decoration: none;
+    font-family: Trebuchet MS;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 10px;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 0;
+    display: block;
+    margin-top: 20px;
+    color: #FEFBD8;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+ul.homeCheckList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 main.pateintHomePage {
@@ -180,8 +251,7 @@ main.pateintHomePage {
 main p {
     position: absolute;
     top: 150px;
-
-    width: 80%;
+    width: 70%;
     text-align: justify;
     margin: 2px;
 
@@ -191,57 +261,20 @@ p.text {
     font-family: Trebuchet MS;
     font-style: normal;
     font-weight: normal;
-    font-size: 32px;
+    font-size: 16px;
     color: #392B35;
     /* padding: 20px; */
 }
 
-.homeCheckList li a {
-
-    text-decoration: none;
-    font-family: Trebuchet MS;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 32px;
-    line-height: 39px;
-    text-align: left;
-    margin-left: 20px;
-    margin-right: 0;
-    display: block;
-    margin-top: 20px;
-    color: #FEFBD8;
-
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+ img.start {
+    position: fixed;
+    top: 60%;
+    left: 10%;
+    height: 40%;
 }
 
-header ul {
-    display: inline;
-    position: absolute;
-    top: 0;
-    right: 0%;
-    padding: 10px;
-    margin: 20px 5%;
-    white-space: nowrap;
-}
-
-header ul li {
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 20px;
-}
-
-header ul li a {
-    text-decoration: none;
-    font-family: Trebuchet MS;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 32px;
-    line-height: 39px;
-    text-align: right;
-
-
-
-    color: #FEFBD8;
-
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+img.login{
+	top: 60%;
+    left: 10%;
+    height: 40%;
 }

@@ -1,0 +1,89 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/profileStyle.css">
+<title>Profil</title>
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a href="">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+
+
+	</header>
+	<div>
+		<ul class="homeCheckList">
+
+			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
+			<li><a href="">Badania</a></li>
+			<li><a href="">Kalendarz</a></li>
+			<li><a href="">Historia chorób</a></li>
+			<li><a href="">Leczenie</a></li>
+
+
+		</ul>
+
+	</div>
+	<main>
+		<ul>
+			<li>
+				<p>
+					Imię: <span th:text="${patient.getFirstName()}"></span>
+				</p>
+			</li>
+			<li>
+				<p>
+					Nazwisko: <span th:text="${patient.getLastName()}"></span>
+				</p>
+			</li>
+
+			<li><form th:action="@{/updateName}" th:object="${patient}"
+					method="post">
+					<input type="text" class="text" id="lastName"
+						th:field="*{lastName}"> <input type="submit"
+						class="button" name="changeSurname" id="changeSurname"
+						value="Zmień">
+				</form></li>
+
+			<li>
+
+				<p>
+					Mail: <span th:text="${patient.getMail()}"></span>
+				</p>
+			</li>
+			<li><form th:action="@{/updateEmail}" th:object="${patient}"
+					method="post">
+					<input type="email" class="text" name="" id="" th:field="*{mail}">
+					<input type="submit" class="button" name="changeEmail"
+						id="changeEmail" value="Zmień">
+				</form></li>
+			<li>
+				<p>
+					Data urodzenia: <span th:text="${patient.getBDate()}"></span>
+				</p>
+				<p>
+					Płeć: <span th:text="${patient.getSex()}"></span>
+				</p>
+			</li>
+			<li>
+				<p>Hasło:</p>
+			</li>
+			<li><form th:action="@{/updatePassword}" th:object="${user}"
+					method="post">
+					<input type="password" class="text" name="" id="" th:field="*{password}"> <input
+						type="submit" class="button" name="changePassword"
+						id="changePassword" value="Zmień">
+				</form></li>
+		</ul>
+	</main>
+	<img src="css/img/Profile.png" alt="pacjent profil">
+</body>
+
+</html>

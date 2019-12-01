@@ -24,9 +24,9 @@ public class HomeController {
 		return "patientHome.html";
 	}
 	
-	@GetMapping("/bad")
-	public String badOut() {
-		return "bad.html";
-	}
+//	@GetMapping("/symptoms")
+//	public String badOut() {
+//		return "symptoms.html";
+//	}
 	
 }

@@ -9,6 +9,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Visit;
@@ -55,8 +56,8 @@ public class VisitService {
 	
 	
 	public Patient getPatient(String login) {
-		Patient patient = patientService.findByUser(login);
-		return patient;
+		PatientDTO patientDTO = patientService.findByUser(login);
+		return modelMapper.map(patientDTO, Patient.class);
 	}
 
 }

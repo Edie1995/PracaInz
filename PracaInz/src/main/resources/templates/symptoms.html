@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Objawy</title>
+<link rel="stylesheet" href="css/symptom.css">
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a th:href="@{/profilePatient.html}">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+	</header>
+	<div>
+        <ul class="homeCheckList">
+
+            <li> <a th:href="@{/homeSymptoms.html}">Obajwy</a> </li>
+            <li><a href="">Badania</a></li>
+            <li><a href="">Kalendarz</a></li>
+            <li><a href="">Historia chorób</a></li>
+            <li><a href="">Leczenie</a></li>
+
+
+        </ul>
+
+    </div>
+	<div class="addSymptom">
+		<form th:action="@{/patientsSymptoms/add}" method="post">
+			<ul>
+				<li><input list="symptoms" name="symptomName" required>
+					<datalist id="symptoms">
+						<option th:each="symptom: ${symptomsDic}"
+							th:value="${symptom.getName()}"></option>
+					</datalist></li>
+				<li><input type="date" name="date"
+					th:object="${date}" required></li>
+
+				<li><input class="button" type="submit" name="addSymptom"
+					value="Dodaj"></li>
+			</ul>
+		</form>
+<img src="css/img/Symptoms.png" alt="symptoms">
+	</div>
+	<div class="searchSymptom">
+		<form th:action="@{patientsSymptoms/symptom/}" method="get">
+			<ul>
+				<li><input list="symptoms" name="symptomName"> <datalist
+						id="symptomsS">
+						<option th:each="symptom: ${symptomsDic}"
+							th:value="${symptom.getName()}"></option>
+					</datalist></li>
+				<li><input type="date" name="date" th:object="${date}"></li>
+				<li><input class="button" type="submit"
+					value="Szukaj"></li>
+
+			</ul>
+		</form >
+		<form th:action="@{/homeSymptoms.html}" method="get">
+		<ul>
+		<li><input class="button" type="submit"
+					value="Wyczysc filtry"></li>
+		</ul>
+		</form>
+		<ul>
+			<li>
+				<table>
+					<tr>
+						<th>Objaw</th>
+						<th>Data</th>
+						<th>Wizyta</th>
+					</tr>
+					<tr th:each="symptom: ${patientSymptoms}">
+						<td th:text="${symptom.getSymptomName()}" />
+						<td th:text="${symptom.getDate()}" />
+						<td th:text="${symptom.getVisitName()}" />
+					</tr>
+				</table>
+			</li>
+		</ul>
+		
+	</div>
+</body>
+
+</html>

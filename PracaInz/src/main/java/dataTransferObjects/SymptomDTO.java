@@ -8,6 +8,15 @@ public class SymptomDTO {
 	public SymptomDTO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public SymptomDTO(String name) {
+		super();
+		this.name = name;
+	}
+
+
 
 	public Long getId() {
 		return id;

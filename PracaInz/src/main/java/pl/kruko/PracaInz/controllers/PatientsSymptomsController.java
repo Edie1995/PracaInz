@@ -5,34 +5,54 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import dataTransferObjects.PatientSymptomDTO;
+import dataTransferObjects.SymptomDTO;
 import pl.kruko.PracaInz.service.PatientSymptomService;
+import pl.kruko.PracaInz.service.SymptomService;
 
-@RestController
-@Path("hello")
+@Controller
 public class PatientsSymptomsController {
 
 	@Autowired
 	private PatientSymptomService patientSymptomService;
+	@Autowired
+	private SymptomService symptomService;
 
-	@GetMapping("patientsSymptoms/symptom/{symptomName}")
+	private List<PatientSymptomDTO> patientSymptomsDTO;
+
+	@GetMapping("patientsSymptoms/symptom")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<PatientSymptomDTO> show(HttpServletRequest request, @PathVariable String symptomName) {
+	public String show(HttpServletRequest request,String symptomName, String date, Model model) {
+		System.out.println(date);		
 		String login = currentUserNameSimple(request);
-		List<PatientSymptomDTO> patientSymptomDTO = patientSymptomService.getPatientSymptomByPatientAndSymptom(login,
-				symptomName);
-		return patientSymptomDTO;
+		LocalDate localDate;
+		if(symptomName.isEmpty()&date.isEmpty()){
+			return "redirect:/symptoms.html";
+		}
+		else if(symptomName.isEmpty()) {
+			localDate = LocalDate.parse(date);
+			patientSymptomsDTO = patientSymptomService.findPatientSymptomsByPatientAndDate(login,
+					localDate);
+		}else if (date.isEmpty()) {
+			patientSymptomsDTO = patientSymptomService.getPatientSymptomByPatientAndSymptom(login,
+					symptomName);
+		}else{
+			localDate = LocalDate.parse(date);
+			patientSymptomsDTO = patientSymptomService.findByPatientAndSymptomAndDate(login, symptomName, localDate);
+		}
+		model.addAttribute("patientSymptoms", patientSymptomsDTO);	
+		return "redirect:/symptoms.html";
 	}
 
 	@GetMapping("patientsSymptoms/date/{localDate}")
@@ -44,24 +64,32 @@ public class PatientsSymptomsController {
 		return patientSymptomDTO;
 	}
 
-	@GetMapping("patientsSymptoms")
+	@GetMapping("/symptoms.html")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public List<PatientSymptomDTO> showByPatient(HttpServletRequest request) {
-		String login = currentUserNameSimple(request);
-		List<PatientSymptomDTO> patientSymptomsDTO = patientSymptomService.findByPatient(login);
-		return patientSymptomsDTO;
+	public String showByPatient(HttpServletRequest request, Model model) {
+		List<SymptomDTO> symptomsDictionary = symptomService.findAll();
+		model.addAttribute("symptomsDic", symptomsDictionary);
+		model.addAttribute("patientSymptoms", patientSymptomsDTO);		
+		return "symptoms.html";
 	}
 
-	@PostMapping("patientsSymptoms/{symptomName}/{date}")
+	@GetMapping("/homeSymptoms.html")
+	public String showAll(HttpServletRequest request, Model model) {
+		String login = currentUserNameSimple(request);
+		patientSymptomsDTO = patientSymptomService.findByPatient(login);
+		model.addAttribute("patientSymptoms", patientSymptomsDTO);		
+		return "redirect:/symptoms.html";
+	}
+	@PostMapping("patientsSymptoms/add")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public PatientSymptomDTO savePatientSymptom(HttpServletRequest request, @PathVariable String symptomName,
-			@PathVariable String date) {
+	public String savePatientSymptom(HttpServletRequest request, String symptomName,
+			String date) {
 		String login = currentUserNameSimple(request);
 		LocalDate localDate = LocalDate.parse(date);
-		PatientSymptomDTO patientSymptomDTO = patientSymptomService.savePatientSymptom(login, symptomName, localDate);
-		return patientSymptomDTO;
+		patientSymptomService.savePatientSymptom(login, symptomName, localDate);
+		return "redirect:/symptoms.html";
 	}
-
+	
 	@DeleteMapping("patientsSymptoms/{id}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public PatientSymptomDTO deletePatientSymptom(HttpServletRequest request, @PathVariable Long id) {
@@ -78,8 +106,8 @@ public class PatientsSymptomsController {
 		String login = currentUserNameSimple(request);
 		LocalDate localDateStart = LocalDate.parse(dateStart);
 		LocalDate localDateEnd = LocalDate.parse(dateEnd);
-		List<PatientSymptomDTO> patientSymptomDTO = patientSymptomService.findByPatientAndDateBetween(login, localDateStart,
-				localDateEnd);
+		List<PatientSymptomDTO> patientSymptomDTO = patientSymptomService.findByPatientAndDateBetween(login,
+				localDateStart, localDateEnd);
 		return patientSymptomDTO;
 	}
 
@@ -102,5 +130,11 @@ public class PatientsSymptomsController {
 		System.out.println(login);
 		return login;
 	}
+
+//	@GetMapping("/symptoms.html")
+//	public String badOut() {
+//		
+//		return "symptoms.html";
+//	}
 
 }

@@ -11,6 +11,7 @@ public class UserDTO {
 	private Doctor doctor;
 	private Patient patient;
 	private Role role;
+	private String password;
 	
 	public UserDTO() {
 		
@@ -45,6 +46,14 @@ public class UserDTO {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

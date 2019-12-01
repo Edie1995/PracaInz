@@ -2,6 +2,7 @@ package pl.kruko.PracaInz.service;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.PatientSymptomDTO;
+import dataTransferObjects.SymptomDTO;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.PatientSymptom;
 import pl.kruko.PracaInz.models.Symptom;
@@ -26,7 +29,7 @@ public class PatientSymptomService {
 	PatientService patientService;
 	@Autowired
 	SymptomService symptomService;
-	
+
 	private ModelMapper modelMapper = new ModelMapper();
 	private Type listType = new TypeToken<List<PatientSymptomDTO>>() {
 	}.getType();
@@ -50,6 +53,7 @@ public class PatientSymptomService {
 		patientSymptoms = patientSymptomRepository.findAllByPatientAndSymptom(patient, symptom);
 		System.out.println(patientSymptoms);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
+
 		return patientSymptomDTO;
 	}
 
@@ -65,8 +69,9 @@ public class PatientSymptomService {
 	public List<PatientSymptomDTO> findByPatient(String login) {
 		Patient patient = getPatient(login);
 		patientSymptoms = patientSymptomRepository.findAllByPatient(patient);
-		System.out.println(patientSymptoms);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
+		Collections.sort(patientSymptomDTO);
+		System.out.println(patientSymptomDTO);
 		return patientSymptomDTO;
 	}
 
@@ -86,46 +91,58 @@ public class PatientSymptomService {
 		return modelMapper.map(patientSymptom, PatientSymptomDTO.class);
 	}
 
+//	public PatientSymptomDTO savePatientSymptom(String login, SymptomDTO symptomDTO, LocalDate date) {
+//		Patient patient = getPatient(login);
+//		Symptom symptom = getSymptom(symptomDTO.getName());
+//		PatientSymptom patientSymptom = new PatientSymptom(date, patient, symptom);
+//		patientSymptomRepository.save(patientSymptom);
+//		return modelMapper.map(patientSymptom, PatientSymptomDTO.class);
+//	}
+
 	public void deletePatientSymptom(PatientSymptomDTO patientSymptomDTO) {
-		PatientSymptom patientSymptom = modelMapper.map(patientSymptomDTO,PatientSymptom.class);
+		PatientSymptom patientSymptom = modelMapper.map(patientSymptomDTO, PatientSymptom.class);
 		patientSymptomRepository.delete(patientSymptom);
 	}
 
-	public Patient currentPatient(HttpServletRequest request) {
-		Patient patient = patientService.findByCurrentUser(request);
+	public PatientDTO currentPatient(HttpServletRequest request) {
+		PatientDTO patient = patientService.findByCurrentUser(request);
 		return patient;
 	}
-	
+
 	public Patient getPatient(String login) {
-		return patientService.findByUser(login);
+		PatientDTO patientDTO = patientService.findByUser(login);
+		return modelMapper.map(patientDTO, Patient.class);
 	}
-	
+
 	public Symptom getSymptom(String symptomName) {
 		return symptomService.findByName(symptomName);
 	}
-	
+
 	public PatientSymptomDTO findByIdAndPatient(Long id, String login) {
 		Patient patient = getPatient(login);
 		PatientSymptom patientSymptom = patientSymptomRepository.findByIdAndPatient(id, patient).orElse(null);
 		PatientSymptomDTO patientSymptomDTO = modelMapper.map(patientSymptom, PatientSymptomDTO.class);
 		return patientSymptomDTO;
 	}
-	
+
 	public List<PatientSymptomDTO> findByPatientAndDateBetween(String login, LocalDate dateStart, LocalDate dateEnd) {
 		Patient patient = getPatient(login);
-		List<PatientSymptom> patientSymptoms =  patientSymptomRepository.findByPatientAndDateBetween(patient, dateStart, dateEnd);
+		List<PatientSymptom> patientSymptoms = patientSymptomRepository.findByPatientAndDateBetween(patient, dateStart,
+				dateEnd);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
 		return patientSymptomDTO;
-		
+
 	}
-	
-	public List<PatientSymptomDTO> findByPatientAndSymptomAndDateBetween(String login, String symptomName, LocalDate dateStart, LocalDate dateEnd) {
+
+	public List<PatientSymptomDTO> findByPatientAndSymptomAndDateBetween(String login, String symptomName,
+			LocalDate dateStart, LocalDate dateEnd) {
 		Patient patient = getPatient(login);
 		Symptom symptom = getSymptom(symptomName);
-		List<PatientSymptom> patientSymptoms = patientSymptomRepository.findByPatientAndSymptomAndDateBetween(patient, symptom, dateStart, dateEnd);
+		List<PatientSymptom> patientSymptoms = patientSymptomRepository.findByPatientAndSymptomAndDateBetween(patient,
+				symptom, dateStart, dateEnd);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
 		return patientSymptomDTO;
-		
+
 	}
 
 }
