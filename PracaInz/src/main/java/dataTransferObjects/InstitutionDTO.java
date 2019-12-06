@@ -12,7 +12,7 @@ public class InstitutionDTO {
 	private String adress;
 	private Long phoneNumber;
 	private String status;
-	private List<Doctor> doctors;
+	private List<DoctorDTO> doctors;
 
 	public InstitutionDTO() {
 		// TODO Auto-generated constructor stub
@@ -66,11 +66,11 @@ public class InstitutionDTO {
 		this.status = status;
 	}
 
-	public List<Doctor> getDoctors() {
+	public List<DoctorDTO> getDoctors() {
 		return doctors;
 	}
 
-	public void setDoctors(List<Doctor> doctors) {
+	public void setDoctors(List<DoctorDTO> doctors) {
 		this.doctors = doctors;
 	}
 

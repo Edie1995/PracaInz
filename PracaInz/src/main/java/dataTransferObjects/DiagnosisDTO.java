@@ -8,7 +8,7 @@ public class DiagnosisDTO {
 	private Long id;
 	private String name;
 	private String details;
-	private Visit visit;
+	private VisitDTO visit;
 	Status status;
 	
 	public DiagnosisDTO() {
@@ -33,10 +33,10 @@ public class DiagnosisDTO {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public Visit getVisit() {
+	public VisitDTO getVisit() {
 		return visit;
 	}
-	public void setVisit(Visit visit) {
+	public void setVisit(VisitDTO visit) {
 		this.visit = visit;
 	}
 	public Status getStatus() {

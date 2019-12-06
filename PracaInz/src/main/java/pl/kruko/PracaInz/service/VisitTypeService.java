@@ -1,10 +1,15 @@
 package pl.kruko.PracaInz.service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.DoctorsCalendarDTO;
+import dataTransferObjects.VisitTypeDTO;
 import pl.kruko.PracaInz.models.VisitType;
 import pl.kruko.PracaInz.repo.VisitTypeRepository;
 
@@ -13,6 +18,10 @@ public class VisitTypeService {
 
 	private VisitTypeRepository visitTypeRepository;
 
+	private ModelMapper modelMapper = new ModelMapper();
+	private Type listType = new TypeToken<List<VisitTypeDTO>>() {
+	}.getType();
+	
 	@Autowired
 	public VisitTypeService(VisitTypeRepository visitTypeRepository) {
 		super();
@@ -24,9 +33,10 @@ public class VisitTypeService {
 		return visitTypes;
 	}
 
-	public VisitType findByName(String name) {
+	public VisitTypeDTO findByName(String name) {
 		VisitType visitType = visitTypeRepository.findByName(name);
-		return visitType;
+		VisitTypeDTO visitTypeDTO = modelMapper.map(visitType,VisitTypeDTO.class);
+		return visitTypeDTO;
 	}
 
 }

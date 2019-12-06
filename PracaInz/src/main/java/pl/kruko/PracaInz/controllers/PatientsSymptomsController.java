@@ -87,7 +87,7 @@ public class PatientsSymptomsController {
 		String login = currentUserNameSimple(request);
 		LocalDate localDate = LocalDate.parse(date);
 		patientSymptomService.savePatientSymptom(login, symptomName, localDate);
-		return "redirect:/symptoms.html";
+		return "redirect:/homeSymptoms.html";
 	}
 	
 	@DeleteMapping("patientsSymptoms/{id}")

@@ -13,9 +13,9 @@ public class DoctorsCalendarDTO {
 	private Long id;
 	private LocalDate date;
 	private LocalTime hour;
-	private Doctor doctor;
-	private Institution institution;
-	private Patient patient;
+	private DoctorDTO doctor;
+	private InstitutionDTO institution;
+	private PatientDTO patient;
 	
 	public DoctorsCalendarDTO() {
 		// TODO Auto-generated constructor stub
@@ -39,22 +39,22 @@ public class DoctorsCalendarDTO {
 	public void setHour(LocalTime hour) {
 		this.hour = hour;
 	}
-	public Doctor getDoctor() {
+	public DoctorDTO getDoctor() {
 		return doctor;
 	}
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorDTO doctor) {
 		this.doctor = doctor;
 	}
-	public Institution getInstitution() {
+	public InstitutionDTO getInstitution() {
 		return institution;
 	}
-	public void setInstitution(Institution institution) {
+	public void setInstitution(InstitutionDTO institution) {
 		this.institution = institution;
 	}
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 	

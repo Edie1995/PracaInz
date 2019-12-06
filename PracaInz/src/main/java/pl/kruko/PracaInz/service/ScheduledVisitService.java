@@ -70,7 +70,8 @@ public class ScheduledVisitService {
 
 	public List<ScheduledVisitDTO> findByPatientAndVisitType(String login, String typeName) {
 		Patient patient = getPatient(login);
-		VisitType visitType = visitTypeService.findByName(typeName);
+		VisitTypeDTO visitTypeDTO = visitTypeService.findByName(typeName);
+		VisitType visitType = modelMapper.map(visitTypeDTO, VisitType.class);
 		List<ScheduledVisit> scheduledVisit = scheduledVisitRepository.findByPatientAndVisitType(patient, visitType);
 		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
 		return scheduledVisitDTO;
@@ -92,8 +93,8 @@ public class ScheduledVisitService {
 		return modelMapper.map(patientDTO, Patient.class);
 	}
 
-	public void addNewScheduledVisit(Patient patient, VisitType visitType, Institution institution, Doctor doctor,
-			LocalDateTime dateTime) {
+	public void addNewScheduledVisit(PatientDTO patient, VisitTypeDTO visitType, InstitutionDTO institution,
+			DoctorDTO doctor, LocalDateTime dateTime) {
 		ScheduledVisitDTO scheduledVisitDTO = new ScheduledVisitDTO(dateTime, visitType, doctor, institution, patient);
 		ScheduledVisit scheduledVisit = modelMapper.map(scheduledVisitDTO, ScheduledVisit.class);
 		System.out.println(scheduledVisit);
@@ -101,16 +102,16 @@ public class ScheduledVisitService {
 
 	}
 
-	public void addNewEvent(String login, String VisitTypeName, String institutionId, String doctorId,
-			String date) {
+	public void addNewEvent(String login, String VisitTypeName, String institutionId, String doctorId, String date) {
 		LocalDateTime dateTime = LocalDateTime.parse(date);
 		Patient patient = getPatient(login);
-		VisitType visitType = visitTypeService.findByName(VisitTypeName);
-		Doctor doctor = doctorService.findById(Long.parseLong(doctorId));
-		Institution institution = institutionService.findById(Long.parseLong(institutionId));
-		if(findByPatientAndDate(login, dateTime).isEmpty()) {
-		addNewScheduledVisit(patient, visitType, institution, doctor, dateTime);}
-		else {
+		VisitTypeDTO visitType = visitTypeService.findByName(VisitTypeName);
+		DoctorDTO doctor = doctorService.findById(Long.parseLong(doctorId));
+		InstitutionDTO institution = institutionService.findById(Long.parseLong(institutionId));
+		PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
+		if (findByPatientAndDate(login, dateTime).isEmpty()) {
+			addNewScheduledVisit(patientDTO, visitType, institution, doctor, dateTime);
+		} else {
 			System.out.println("zaklepane");
 		}
 

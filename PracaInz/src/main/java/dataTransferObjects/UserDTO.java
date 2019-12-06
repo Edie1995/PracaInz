@@ -8,8 +8,8 @@ public class UserDTO {
 	
 	private Long id;
 	private String login;
-	private Doctor doctor;
-	private Patient patient;
+	private DoctorDTO doctor;
+	private PatientDTO patient;
 	private Role role;
 	private String password;
 	
@@ -29,16 +29,16 @@ public class UserDTO {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	public Doctor getDoctor() {
+	public DoctorDTO getDoctor() {
 		return doctor;
 	}
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorDTO doctor) {
 		this.doctor = doctor;
 	}
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 	public Role getRole() {

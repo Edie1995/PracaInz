@@ -9,8 +9,8 @@ public class VisitDTO {
 
 	private Long id;
 	private LocalDate date;
-	private Patient patient;
-	private Doctor doctor;
+	private PatientDTO patient;
+	private DoctorDTO doctor;
 	
 	public VisitDTO() {
 		// TODO Auto-generated constructor stub
@@ -32,19 +32,19 @@ public class VisitDTO {
 		this.date = date;
 	}
 
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 
-	public Doctor getDoctor() {
+	public DoctorDTO getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorDTO doctor) {
 		this.doctor = doctor;
 	}
 

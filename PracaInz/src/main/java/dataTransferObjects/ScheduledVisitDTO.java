@@ -12,19 +12,19 @@ public class ScheduledVisitDTO {
 
 	private Long id;
 	private LocalDateTime date;
-	private Visit visit;
-	private VisitType visitType;
-	private Doctor doctor;
-	private Institution institution;
-	private Patient patient;
+	private VisitDTO visit;
+	private VisitTypeDTO visitType;
+	private DoctorDTO doctor;
+	private InstitutionDTO institution;
+	private PatientDTO patient;
 	
 	public ScheduledVisitDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
 
-	public ScheduledVisitDTO(LocalDateTime date, VisitType visitType, Doctor doctor, Institution institution,
-			Patient patient) {
+	public ScheduledVisitDTO(LocalDateTime date, VisitTypeDTO visitType, DoctorDTO doctor, InstitutionDTO institution,
+			PatientDTO patient) {
 		super();
 		this.date = date;
 		this.visitType = visitType;
@@ -50,43 +50,43 @@ public class ScheduledVisitDTO {
 		this.date = date;
 	}
 
-	public Visit getVisit() {
+	public VisitDTO getVisit() {
 		return visit;
 	}
 
-	public void setVisit(Visit visit) {
+	public void setVisit(VisitDTO visit) {
 		this.visit = visit;
 	}
 
-	public VisitType getVisitType() {
+	public VisitTypeDTO getVisitType() {
 		return visitType;
 	}
 
-	public void setVisitType(VisitType visitType) {
+	public void setVisitType(VisitTypeDTO visitType) {
 		this.visitType = visitType;
 	}
 
-	public Doctor getDoctor() {
+	public DoctorDTO getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(Doctor doctor) {
+	public void setDoctor(DoctorDTO doctor) {
 		this.doctor = doctor;
 	}
 
-	public Institution getInstitution() {
+	public InstitutionDTO getInstitution() {
 		return institution;
 	}
 
-	public void setInstitution(Institution institution) {
+	public void setInstitution(InstitutionDTO institution) {
 		this.institution = institution;
 	}
 
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 	

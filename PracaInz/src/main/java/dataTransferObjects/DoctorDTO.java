@@ -11,8 +11,8 @@ public class DoctorDTO {
 	private Long id;
 	private int telephoneNumber;
 	private Status status;
-	private Specialization specializtaion;
-	private List<Institution> institutions;
+	private SpecializationDTO specializtaion;
+	private List<InstitutionDTO> institutions;
 	private User user;
 	
 	public DoctorDTO() {
@@ -42,19 +42,19 @@ public class DoctorDTO {
 		this.status = status;
 	}
 
-	public Specialization getSpecializtaion() {
+	public SpecializationDTO getSpecializtaion() {
 		return specializtaion;
 	}
 
-	public void setSpecializtaion(Specialization specializtaion) {
+	public void setSpecializtaion(SpecializationDTO specializtaion) {
 		this.specializtaion = specializtaion;
 	}
 
-	public List<Institution> getInstitutions() {
+	public List<InstitutionDTO> getInstitutions() {
 		return institutions;
 	}
 
-	public void setInstitutions(List<Institution> institutions) {
+	public void setInstitutions(List<InstitutionDTO> institutions) {
 		this.institutions = institutions;
 	}
 

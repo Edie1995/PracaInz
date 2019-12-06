@@ -10,8 +10,8 @@ public class PatientsMedicamentDTO {
 	private Long id;
 	private int dosage;
 	private int frequency;
-	private Visit visit;
-	private Medicament medicament;
+	private VisitDTO visit;
+	private MedicamentDTO medicament;
 	private Status status;
 	
 	public PatientsMedicamentDTO() {
@@ -42,19 +42,19 @@ public class PatientsMedicamentDTO {
 		this.frequency = frequency;
 	}
 
-	public Visit getVisit() {
+	public VisitDTO getVisit() {
 		return visit;
 	}
 
-	public void setVisit(Visit visit) {
+	public void setVisit(VisitDTO visit) {
 		this.visit = visit;
 	}
 
-	public Medicament getMedicament() {
+	public MedicamentDTO getMedicament() {
 		return medicament;
 	}
 
-	public void setMedicament(Medicament medicament) {
+	public void setMedicament(MedicamentDTO medicament) {
 		this.medicament = medicament;
 	}
 

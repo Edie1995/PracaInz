@@ -8,7 +8,7 @@ public class PatientDTO extends Person {
 	private Long id;
 	private String mail;
 	private Long pesel;
-	private User user;
+	private UserDTO user;
 
 	public PatientDTO() {
 		// TODO Auto-generated constructor stub
@@ -38,11 +38,11 @@ public class PatientDTO extends Person {
 		this.pesel = pesel;
 	}
 
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
 

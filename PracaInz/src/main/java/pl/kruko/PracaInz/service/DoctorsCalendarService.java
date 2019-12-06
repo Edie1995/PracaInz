@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import dataTransferObjects.DoctorDTO;
 import dataTransferObjects.DoctorsCalendarDTO;
 import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Doctor;

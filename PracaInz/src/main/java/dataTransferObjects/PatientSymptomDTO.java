@@ -14,9 +14,9 @@ public class PatientSymptomDTO implements Comparable <PatientSymptomDTO>{
 
 	private Long id;
 	private LocalDate date;
-	private Patient patient;
-	private Symptom symptom;
-	private Visit visit;
+	private PatientDTO patient;
+	private SymptomDTO symptom;
+	private VisitDTO visit;
 	
 	public PatientSymptomDTO() {
 		// TODO Auto-generated constructor stub
@@ -54,27 +54,27 @@ public class PatientSymptomDTO implements Comparable <PatientSymptomDTO>{
 		this.date = date;
 	}
 
-	public Patient getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 
-	public Symptom getSymptom() {
+	public SymptomDTO getSymptom() {
 		return symptom;
 	}
 
-	public void setSymptom(Symptom symptom) {
+	public void setSymptom(SymptomDTO symptom) {
 		this.symptom = symptom;
 	}
 
-	public Visit getVisit() {
+	public VisitDTO getVisit() {
 		return visit;
 	}
 
-	public void setVisit(Visit visit) {
+	public void setVisit(VisitDTO visit) {
 		this.visit = visit;
 	}
 	

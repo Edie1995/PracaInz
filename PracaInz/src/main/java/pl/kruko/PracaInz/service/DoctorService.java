@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.DoctorDTO;
+import dataTransferObjects.InstitutionDTO;
 import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.Institution;
 import pl.kruko.PracaInz.models.Specialization;
@@ -39,8 +40,9 @@ public class DoctorService {
 		return doctorsDTO;
 	}
 	
-	public Doctor findById(Long id) {
-		return doctorRepository.findById(id).orElse(null);
+	public DoctorDTO findById(Long id) {
+		Doctor doctor = doctorRepository.findById(id).orElse(null);
+		return modelMapper.map(doctor, DoctorDTO.class);
 	}
 	
 	
