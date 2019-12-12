@@ -12,7 +12,6 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dataTransferObjects.PatientDTO;
 import dataTransferObjects.PatientSymptomDTO;
 import dataTransferObjects.SymptomDTO;
 import pl.kruko.PracaInz.models.Patient;
@@ -47,8 +46,8 @@ public class PatientSymptomService {
 		return patientSymptomRepository.findById(id).orElse(new PatientSymptom());
 	}
 
-	public List<PatientSymptomDTO> getPatientSymptomByPatientAndSymptom(String login, String symptomName) {
-		Symptom symptom = getSymptom(symptomName);
+	public List<PatientSymptomDTO> getPatientSymptomByPatientAndSymptom(String login, SymptomDTO symptomDTO) {
+		Symptom symptom = getSymptom(symptomDTO);
 		Patient patient = getPatient(login);
 		patientSymptoms = patientSymptomRepository.findAllByPatientAndSymptom(patient, symptom);
 		System.out.println(patientSymptoms);
@@ -75,47 +74,40 @@ public class PatientSymptomService {
 		return patientSymptomDTO;
 	}
 
-	public List<PatientSymptomDTO> findByPatientAndSymptomAndDate(String login, String symptomName, LocalDate date) {
+	public List<PatientSymptomDTO> findByPatientAndSymptomAndDate(String login, SymptomDTO symptomDTO,
+			LocalDate date) {
 		Patient patient = getPatient(login);
-		Symptom symptom = getSymptom(symptomName);
+		Symptom symptom = getSymptom(symptomDTO);
 		patientSymptoms = patientSymptomRepository.findAllByPatientAndSymptomAndDate(patient, symptom, date);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
 		return patientSymptomDTO;
 	}
 
-	public PatientSymptomDTO savePatientSymptom(String login, String symptomName, LocalDate date) {
+	public void savePatientSymptom(String login, SymptomDTO symptomName, LocalDate date) {
 		Patient patient = getPatient(login);
 		Symptom symptom = getSymptom(symptomName);
 		PatientSymptom patientSymptom = new PatientSymptom(date, patient, symptom);
 		patientSymptomRepository.save(patientSymptom);
-		return modelMapper.map(patientSymptom, PatientSymptomDTO.class);
+//		return modelMapper.map(patientSymptom, PatientSymptomDTO.class);
 	}
 
-//	public PatientSymptomDTO savePatientSymptom(String login, SymptomDTO symptomDTO, LocalDate date) {
-//		Patient patient = getPatient(login);
-//		Symptom symptom = getSymptom(symptomDTO.getName());
-//		PatientSymptom patientSymptom = new PatientSymptom(date, patient, symptom);
-//		patientSymptomRepository.save(patientSymptom);
-//		return modelMapper.map(patientSymptom, PatientSymptomDTO.class);
+//	public void deletePatientSymptom(PatientSymptomDTO patientSymptomDTO) {
+//		PatientSymptom patientSymptom = modelMapper.map(patientSymptomDTO, PatientSymptom.class);
+//		patientSymptomRepository.delete(patientSymptom);
 //	}
 
-	public void deletePatientSymptom(PatientSymptomDTO patientSymptomDTO) {
-		PatientSymptom patientSymptom = modelMapper.map(patientSymptomDTO, PatientSymptom.class);
-		patientSymptomRepository.delete(patientSymptom);
-	}
-
-	public PatientDTO currentPatient(HttpServletRequest request) {
-		PatientDTO patient = patientService.findByCurrentUser(request);
+	public Patient currentPatient(HttpServletRequest request) {
+		Patient patient = patientService.findByCurrentUser(request);
 		return patient;
 	}
 
 	public Patient getPatient(String login) {
-		PatientDTO patientDTO = patientService.findByUser(login);
-		return modelMapper.map(patientDTO, Patient.class);
+		Patient patient = patientService.findByUser(login);
+		return patient;
 	}
 
-	public Symptom getSymptom(String symptomName) {
-		return symptomService.findByName(symptomName);
+	public Symptom getSymptom(SymptomDTO symptomDTO) {
+		return modelMapper.map(symptomDTO, Symptom.class);
 	}
 
 	public PatientSymptomDTO findByIdAndPatient(Long id, String login) {
@@ -134,7 +126,7 @@ public class PatientSymptomService {
 
 	}
 
-	public List<PatientSymptomDTO> findByPatientAndSymptomAndDateBetween(String login, String symptomName,
+	public List<PatientSymptomDTO> findByPatientAndSymptomAndDateBetween(String login, SymptomDTO symptomName,
 			LocalDate dateStart, LocalDate dateEnd) {
 		Patient patient = getPatient(login);
 		Symptom symptom = getSymptom(symptomName);

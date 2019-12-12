@@ -1,7 +1,5 @@
 package dataTransferObjects;
 
-import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Role;
 
 public class UserDTO {

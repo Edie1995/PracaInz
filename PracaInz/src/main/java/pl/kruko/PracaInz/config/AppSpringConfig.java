@@ -11,5 +11,4 @@ public class AppSpringConfig {
 	public ModelMapper modelMapper() {
 	    return new ModelMapper();
 	}
-
 }

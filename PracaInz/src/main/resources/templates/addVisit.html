@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/addVisitStyle.css">
+    <title>Dodaj wizyte</title>
+</head>
+
+<body>
+    <header>
+        <img src="css/img/logo.png" alt="application logo">
+        <ul>
+            <li><a th:href="@{/profilePatient.html}">Profil</a></li>
+            <li><a th:href="@{/logout}">Wyloguj</a></li>
+        </ul>
+    </header>
+    <div>
+        <ul class="homeCheckList">
+
+            <li> <a th:href="@{/homeSymptoms.html}">Obajwy</a> </li>
+            <li><a href="">Badania</a></li>
+            <li><a th:href="@{/calendar.html}">Kalendarz</a></li>
+            <li><a th:href="@{/homePatientDiagnosis.html}">Historia chorób</a></li>
+            <li><a th:href="@{/patientMedicament.html}">Leczenie</a></li>
+        </ul>
+    </div>
+    <main>
+    </main>
+</body>
+
+</html>

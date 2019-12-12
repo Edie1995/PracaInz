@@ -35,9 +35,7 @@ public class ProfileController {
 		String login = currentUserNameSimple(request);
 		System.out.println(patientDTO);
 		System.out.println("lastName" + patientDTO.getLastName());
-		if (!patientDTO.getLastName().isEmpty()) {
 			patientService.upateLastName(login, patientDTO);
-		}
 		return "redirect:/profilePatient.html";
 	}
 	
@@ -46,9 +44,7 @@ public class ProfileController {
 	public String updatePatientMail(HttpServletRequest request, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
 		String login = currentUserNameSimple(request);
 		System.out.println(patientDTO);
-		if (!patientDTO.getMail().isEmpty()) {
 			patientService.updateMail(login, patientDTO);
-		}
 		return "redirect:/profilePatient.html";
 	}
 	
@@ -57,9 +53,8 @@ public class ProfileController {
 	public String updatePatientPassword(HttpServletRequest request, @ModelAttribute("userDTO") UserDTO userDTO) {
 		String login = currentUserNameSimple(request);
 		System.out.println(userDTO);
-		if (!userDTO.getPassword().isEmpty()) {
 			patientService.updatePassword(login, userDTO);
-		}
+
 		return "redirect:/profilePatient.html";
 	}
 	
@@ -77,9 +72,10 @@ public class ProfileController {
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public String showAll(HttpServletRequest request, Model model) {
 		String login = currentUserNameSimple(request);
-		patientDTO = patientService.findByUser(login);
-		UserDTO user = userService.findByLogin(login);
+		patientDTO = patientService.findDTObyUser(login);
+		UserDTO user = userService.findDTOByLogin(login);
 		model.addAttribute("patient", patientDTO);
+		model.addAttribute("updatePatient", new PatientDTO());
 		model.addAttribute("user", user);
 		return "profilePatient.html";
 

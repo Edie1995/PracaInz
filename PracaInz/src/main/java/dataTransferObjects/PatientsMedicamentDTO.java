@@ -1,19 +1,16 @@
 package dataTransferObjects;
 
-import pl.kruko.PracaInz.models.Medicament;
 import pl.kruko.PracaInz.models.Status;
-import pl.kruko.PracaInz.models.Visit;
 
-public class PatientsMedicamentDTO {
+public class PatientsMedicamentDTO implements Comparable<PatientsMedicamentDTO> {
 
-	
 	private Long id;
 	private int dosage;
 	private int frequency;
 	private VisitDTO visit;
 	private MedicamentDTO medicament;
 	private Status status;
-	
+
 	public PatientsMedicamentDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -65,7 +62,10 @@ public class PatientsMedicamentDTO {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
-	
+
+	@Override
+	public int compareTo(PatientsMedicamentDTO o) {
+		return this.visit.compareTo(o.getVisit());
+	}
+
 }

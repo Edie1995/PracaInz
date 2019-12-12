@@ -1,14 +1,6 @@
 package dataTransferObjects;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import pl.kruko.PracaInz.models.Patient;
-import pl.kruko.PracaInz.models.Symptom;
-import pl.kruko.PracaInz.models.Visit;
 
 public class PatientSymptomDTO implements Comparable <PatientSymptomDTO>{
 

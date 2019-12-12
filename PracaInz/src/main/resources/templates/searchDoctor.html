@@ -1,0 +1,82 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/searchDoctorStyle.css">
+<title>Szukaj lekarza</title>
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a th:href="@{/profilePatient.html}">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+	</header>
+	<div>
+		<ul class="homeCheckList">
+
+			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
+			<li><a href="">Badania</a></li>
+			<li><a th:href="@{/calendar.html}">Kalendarz</a></li>
+			<li><a th:href="@{/homePatientDiagnosis.html}">Historia
+					chorób</a></li>
+			<li><a th:href="@{/homePatientMedicament.html}">Leczenie</a></li>
+		</ul>
+	</div>
+	<main>
+		<div>
+			<form th:action="@{/addVisit/search}" method="post">
+				<ul>
+
+					<!--<li><label for="types"></label>Wizyta czy badanie?</li>
+				<li>
+
+						<select th:object="${type}" required>
+							<option th:value=0 th:utext="badanie"></option>
+							<option th:value=1 th:utext="wizyta"></option>
+						</select>
+				</li>-->
+
+					<li><label for="visitName">Rodzaj wizyty</label></li>
+					<li><div th:object="${visitType}">
+							<select th:field="*{id}" required>
+								<option value=""></option>
+								<option th:each="visit: ${visitTypes}"
+									th:value="${visit.getId()}" th:utext="${visit.getName()}"></option>
+							</select>
+						</div></li>
+
+					<li><label for="city">Miasto</label></li>
+					<li><input type="text" class="text" id="city" name="city">
+					</li>
+
+					<li><label for="doctorName">Lekarz</label></li>
+					<li><select id="doctorName" name="doctorName" required>
+							<option value=""></option>
+							<option th:each="doc: ${doctors}" th:value="${doc.getLastName()}"
+								th:utext="${doc.getLastName()}"></option>
+					</select></li>
+					<li><label for="startDate">Data wizyty</label></li>
+					<li><input type="date" class="text" name="date" id="startDate"></li>
+
+					<li><label for="timeOfDay">Pora dnia</label></li>
+					<li><input list="timeOfDay" class="text" name="timeOfDay"
+						id="timeOfDay1"> <datalist id="timeOfDay">
+							<option value="rano"></option>
+							<option value="południe"></option>
+							<option value="wieczór"></option>
+						</datalist></li>
+
+					<li><input type="submit" class="button" value="szukaj"></li>
+				</ul>
+			</form>
+		</div>
+	</main>
+	<img src="css/img/walizka.png" alt="walizka">
+</body>
+
+</html>

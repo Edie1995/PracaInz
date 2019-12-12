@@ -1,18 +1,14 @@
 package pl.kruko.PracaInz.service;
 
-import java.lang.reflect.Type;
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.PatientDTO;
-import dataTransferObjects.PatientSymptomDTO;
 import dataTransferObjects.UserDTO;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.User;
@@ -24,8 +20,6 @@ public class PatientService {
 	@Autowired
 	private UserService userService;
 	private ModelMapper modelMapper = new ModelMapper();
-	private Type listType = new TypeToken<List<PatientSymptomDTO>>() {
-	}.getType();
 
 	@Autowired
 	public PatientService(PatientRepository patientRepository) {
@@ -38,40 +32,42 @@ public class PatientService {
 		return patient;
 	}
 
-	public PatientDTO findByUser(String login) {
-		UserDTO userDTO = userService.findByLogin(login);
-		User user = modelMapper.map(userDTO, User.class);
-		System.out.println(user);
+	public Patient findByUser(String login) {
+		User user = userService.findByLogin(login);
 		Patient patient = patientRepository.findByUser(user);
-		PatientDTO patientDto = modelMapper.map(patient, PatientDTO.class);
-		return patientDto;
+		return patient;
 	}
 
-	public PatientDTO findByCurrentUser(HttpServletRequest request) {
+	public PatientDTO findDTObyUser(String login) {
+		Patient patient = findByUser(login);
+		return modelMapper.map(patient, PatientDTO.class);
+	}
+
+	public Patient findByCurrentUser(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		String login = principal.getName();
 		return findByUser(login);
 	}
 
 	public void upateLastName(String login, PatientDTO patient) {
-		PatientDTO patientDto = findByUser(login);
-		patientDto.setLastName(patient.getLastName());
-		Patient patient1 = modelMapper.map(patientDto, Patient.class);
+		Patient patient1 = findByUser(login);
+		patient1.setLastName(patient.getLastName());
+//		Patient patient1 = modelMapper.map(patientDto, Patient.class);
 		patientRepository.save(patient1);
 	}
 
 	public void updateMail(String login, PatientDTO patient) {
-		PatientDTO patientDto = findByUser(login);
-		patientDto.setMail(patient.getMail());
-		Patient patient1 = modelMapper.map(patientDto, Patient.class);
+		Patient patient1 = findByUser(login);
+		patient1.setMail(patient.getMail());
+//		Patient patient1 = modelMapper.map(patient, Patient.class);
 		patientRepository.save(patient1);
 	}
 
 	public void updatePassword(String login, UserDTO userDTO) {
-		UserDTO user = userService.findByLogin(login);
+		User user = userService.findByLogin(login);
 		user.setPassword(userDTO.getPassword());
-		User user1 = modelMapper.map(user, User.class);
-		userService.save(user1);
+//		User user1 = modelMapper.map(user, User.class);
+		userService.save(user);
 	}
 
 }

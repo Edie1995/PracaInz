@@ -21,4 +21,6 @@ public interface PatientsMedicamentRepository extends JpaRepository<PatientsMedi
 	
 	List<PatientsMedicament> findByVisit(Visit visit);
 	
+//	List<PatientsMedicament> findByPatient(Patient patient);
+	
 }

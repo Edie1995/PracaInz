@@ -1,17 +1,15 @@
 package dataTransferObjects;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Patient;
-
-public class VisitDTO {
+public class VisitDTO implements Comparable<VisitDTO>{
 
 	private Long id;
-	private LocalDate date;
+	private LocalDateTime date;
 	private PatientDTO patient;
 	private DoctorDTO doctor;
-	
+
 	public VisitDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,11 +22,11 @@ public class VisitDTO {
 		this.id = id;
 	}
 
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -48,12 +46,20 @@ public class VisitDTO {
 		this.doctor = doctor;
 	}
 
+	public String getHour() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		return date.format(formatter);
+	}
+
 	@Override
 	public String toString() {
-		return "VisitDTO [id=" + id + ", date=" + date + ", patient=" + patient + ", doctor=" + doctor + "]";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy");
+		return "VisitDTO [id=" + id + ", date=" + date.format(formatter) + ", patient=" + patient + ", doctor=" + doctor + "]";
 	}
-	
-	
-	
-	
+
+	@Override
+	public int compareTo(VisitDTO o) {
+		return this.date.toLocalDate().compareTo(o.getDate().toLocalDate())*(-1);
+	}
+
 }

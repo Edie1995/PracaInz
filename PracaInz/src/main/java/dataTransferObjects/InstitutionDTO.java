@@ -2,8 +2,6 @@ package dataTransferObjects;
 
 import java.util.List;
 
-import pl.kruko.PracaInz.models.Doctor;
-
 public class InstitutionDTO {
 
 	private Long id;
@@ -74,4 +72,10 @@ public class InstitutionDTO {
 		this.doctors = doctors;
 	}
 
+	@Override
+	public String toString() {
+		return name + ",<br> miasto: " + city + ",<br> ulica: " + adress;
+	}
+
+	
 }

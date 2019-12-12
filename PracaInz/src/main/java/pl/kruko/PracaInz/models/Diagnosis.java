@@ -58,13 +58,5 @@ public class Diagnosis {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Diagnosis [id=" + id + ", name=" + name + ", details=" + details + ", visit=" + visit + "]";
-//	}
-
-
-
 	
 }

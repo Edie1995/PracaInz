@@ -1,5 +1,5 @@
 package pl.kruko.PracaInz.models;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ public class ScheduledVisit {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date date;
+	private LocalDateTime date;
 	@OneToOne(optional = true)
 	private Visit visit;
 	@ManyToOne
@@ -39,11 +39,11 @@ public class ScheduledVisit {
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

@@ -2,6 +2,7 @@ package pl.kruko.PracaInz.service;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.PatientsMedicamentDTO;
-import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Medicament;
 import pl.kruko.PracaInz.models.PatientsMedicament;
 import pl.kruko.PracaInz.models.Status;
@@ -43,33 +43,34 @@ public class PatientsMedicamentService {
 		return patientsMedicamentDTO;
 	}
 
-	public List<PatientsMedicamentDTO> findByStatusAndPatient(String statusName, String login) {
-		Status status = getStatus(statusName);
+	public List<PatientsMedicamentDTO> findByStatusAndPatient(Integer statusNumber, String login) {
+		Status status = getStatus(statusNumber);
 		List<Visit> visits = getVisit(login);
 		List<PatientsMedicament> patientsMedicaments = new ArrayList<>();
 		for (Visit v : visits) {
 			patientsMedicaments.addAll(patientsMedicamentRepository.findByVisitAndStatus(v, status));
 		}
 		List<PatientsMedicamentDTO> patientsMedicamentDTO = modelMapper.map(patientsMedicaments, listType);
+		Collections.sort(patientsMedicamentDTO);
 		return patientsMedicamentDTO;
 	}
 
 	public List<Visit> getVisit(String login) {
-		List<VisitDTO> visitsDTO = visitService.findByPatient(login);
-		Type listTypeVisit = new TypeToken<List<VisitDTO>>() {
-		}.getType();
-		List<Visit> visits = modelMapper.map(visitsDTO, listTypeVisit);
+		List<Visit> visits = visitService.findByPatient(login);
 		return visits;
 	}
 
-	public Status getStatus(String statusName) {
-		Status status = Status.valueOf(statusName);
-		System.out.println(status);
+	public Status getStatus(Integer statusNumber) {
+		Status status;
+		if (statusNumber == 0) {
+			status = Status.ACTIVE;
+		} else {
+			status = Status.INACTIVE;
+		}
 		return status;
 	}
 
 	public List<Medicament> getMedicaments(String medicamentName) {
-
 		List<Medicament> medicament = medicamentService.findByName(medicamentName);
 		return medicament;
 	}
@@ -90,13 +91,12 @@ public class PatientsMedicamentService {
 
 	public List<PatientsMedicamentDTO> findAllByPatient(String login) {
 		List<Visit> visits = getVisit(login);
-		System.out.println(visits);
 		List<PatientsMedicament> patientsMedicaments = new ArrayList<>();
 		for (Visit v : visits) {
 			patientsMedicaments.addAll(patientsMedicamentRepository.findByVisit(v));
 		}
-		System.out.println(patientsMedicaments);
 		List<PatientsMedicamentDTO> patientsMedicamentDTO = modelMapper.map(patientsMedicaments, listType);
+		Collections.sort(patientsMedicamentDTO);
 		return patientsMedicamentDTO;
 	}
 

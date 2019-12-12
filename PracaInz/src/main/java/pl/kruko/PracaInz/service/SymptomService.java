@@ -8,7 +8,6 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dataTransferObjects.PatientSymptomDTO;
 import dataTransferObjects.SymptomDTO;
 import pl.kruko.PracaInz.models.Symptom;
 import pl.kruko.PracaInz.repo.SymptomRepository;

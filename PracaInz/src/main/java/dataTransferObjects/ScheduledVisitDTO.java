@@ -1,14 +1,9 @@
 package dataTransferObjects;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Institution;
-import pl.kruko.PracaInz.models.Patient;
-import pl.kruko.PracaInz.models.Visit;
-import pl.kruko.PracaInz.models.VisitType;
-
-public class ScheduledVisitDTO {
+public class ScheduledVisitDTO implements Comparable<ScheduledVisitDTO>{
 
 	private Long id;
 	private LocalDateTime date;
@@ -18,7 +13,7 @@ public class ScheduledVisitDTO {
 	private InstitutionDTO institution;
 	private PatientDTO patient;
 	
-	public ScheduledVisitDTO() {
+	public ScheduledVisitDTO(){
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -89,6 +84,24 @@ public class ScheduledVisitDTO {
 	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
+	
+	public String getHour() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		return date.format(formatter);
+	}
+
+	@Override
+	public int compareTo(ScheduledVisitDTO sV) {
+		return this.date.compareTo(sV.getDate());
+	}
+	
+	@Override
+	public String toString() {
+		return "rodzaj: " + visitType
+				+ ",<br> lekarz: " + doctor + ",<br> placówka: " + institution;
+	}
+	
+	
 	
 	
 	

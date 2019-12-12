@@ -6,7 +6,7 @@ public class SymptomDTO {
 	private String name;
 	
 	public SymptomDTO() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	
@@ -33,6 +33,14 @@ public class SymptomDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "SymptomDTO [id=" + id + ", name=" + name + "]";
+	}
+	
 	
 	
 }

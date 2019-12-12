@@ -8,9 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dataTransferObjects.DoctorDTO;
 import dataTransferObjects.DoctorsCalendarDTO;
-import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.DoctorsCalendar;
 import pl.kruko.PracaInz.repo.DoctorsCalendarRepository;
@@ -44,4 +42,8 @@ public class DoctorsCalendarService {
 		return eventsDTO;		
 	}
 	
+//	public List<DoctorsCalendarDTO> findForRegistration(LocalDate date, Doctor doctor, Institution institution, VisitType visitType){
+//		
+//	}
+//	
 }

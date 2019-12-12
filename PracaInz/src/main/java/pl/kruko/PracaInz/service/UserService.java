@@ -20,11 +20,15 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public UserDTO findByLogin(String login) {	
-		User user = userRepository.findByLogin(login);
+	public UserDTO findDTOByLogin(String login) {	
+		User user = findByLogin(login);
 		return modelMapper.map(user, UserDTO.class);
 	}
 	
+	public User findByLogin(String login) {
+		User user = userRepository.findByLogin(login);
+		return user;
+	}
 	public void save(User user) {
 		userRepository.save(user);
 	}

@@ -1,9 +1,8 @@
 package dataTransferObjects;
 
 import pl.kruko.PracaInz.models.Status;
-import pl.kruko.PracaInz.models.Visit;
 
-public class DiagnosisDTO {
+public class DiagnosisDTO implements Comparable<DiagnosisDTO>{
 
 	private Long id;
 	private String name;
@@ -44,6 +43,11 @@ public class DiagnosisDTO {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	@Override
+	public int compareTo(DiagnosisDTO o) {
+		return this.visit.compareTo(o.getVisit());
 	}
 	
 	

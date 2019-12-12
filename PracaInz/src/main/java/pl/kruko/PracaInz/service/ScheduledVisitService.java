@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -16,8 +17,6 @@ import dataTransferObjects.InstitutionDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import dataTransferObjects.VisitTypeDTO;
-import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Institution;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.ScheduledVisit;
 import pl.kruko.PracaInz.models.VisitType;
@@ -40,6 +39,8 @@ public class ScheduledVisitService {
 	private Type listType = new TypeToken<List<ScheduledVisitDTO>>() {
 	}.getType();
 
+	private List<ScheduledVisitDTO> scheduledVisitDTO;
+
 	@Autowired
 	public ScheduledVisitService(ScheduledVisitRepository scheduledVisitRepository) {
 		super();
@@ -56,15 +57,15 @@ public class ScheduledVisitService {
 	public List<ScheduledVisitDTO> findByPatient(String login) {
 		Patient patient = getPatient(login);
 		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatient(patient);
-		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
+		scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
+		Collections.sort(scheduledVisitDTO);
 		return scheduledVisitDTO;
 	}
 
 	public List<ScheduledVisitDTO> findByPatientAndDate(String login, LocalDateTime date) {
 		Patient patient = getPatient(login);
 		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatientAndDate(patient, date);
-		System.out.println(scheduledVisits);
-		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
+		scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
 		return scheduledVisitDTO;
 	}
 
@@ -73,31 +74,31 @@ public class ScheduledVisitService {
 		VisitTypeDTO visitTypeDTO = visitTypeService.findByName(typeName);
 		VisitType visitType = modelMapper.map(visitTypeDTO, VisitType.class);
 		List<ScheduledVisit> scheduledVisit = scheduledVisitRepository.findByPatientAndVisitType(patient, visitType);
-		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
+		scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
 		return scheduledVisitDTO;
 	}
 
-	public List<ScheduledVisitDTO> findByPatientAndType(String login, int type) {
-		Patient patient = getPatient(login);
-		List<VisitType> visitType = visitTypeService.findByType(type);
-		List<ScheduledVisit> scheduledVisit = new ArrayList<>();
-		for (VisitType v : visitType) {
-			scheduledVisit.addAll(scheduledVisitRepository.findByPatientAndVisitType(patient, v));
-		}
-		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
-		return scheduledVisitDTO;
-	}
+//	public List<ScheduledVisitDTO> findByPatientAndType(String login, int type) {
+//		Patient patient = getPatient(login);
+//		List<VisitType> visitType = visitTypeService.findByType(type);
+//		List<ScheduledVisit> scheduledVisit = new ArrayList<>();
+//		for (VisitType v : visitType) {
+//			scheduledVisit.addAll(scheduledVisitRepository.findByPatientAndVisitType(patient, v));
+//		}
+//		scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
+//		return scheduledVisitDTO;
+//	}
 
 	public Patient getPatient(String login) {
-		PatientDTO patientDTO = patientService.findByUser(login);
-		return modelMapper.map(patientDTO, Patient.class);
+		Patient patient = patientService.findByUser(login);
+//		return modelMapper.map(patientDTO, Patient.class);
+		return patient;
 	}
 
 	public void addNewScheduledVisit(PatientDTO patient, VisitTypeDTO visitType, InstitutionDTO institution,
 			DoctorDTO doctor, LocalDateTime dateTime) {
 		ScheduledVisitDTO scheduledVisitDTO = new ScheduledVisitDTO(dateTime, visitType, doctor, institution, patient);
 		ScheduledVisit scheduledVisit = modelMapper.map(scheduledVisitDTO, ScheduledVisit.class);
-		System.out.println(scheduledVisit);
 		scheduledVisitRepository.save(scheduledVisit);
 
 	}
@@ -115,6 +116,16 @@ public class ScheduledVisitService {
 			System.out.println("zaklepane");
 		}
 
+	}
+
+	public List<LocalDate> getDates( List<ScheduledVisitDTO> scheduledVisitDTO) {
+		List<LocalDate> dates = new ArrayList<LocalDate>();
+		for (ScheduledVisitDTO sV : scheduledVisitDTO) {
+			if (!dates.contains(sV.getDate().toLocalDate())) {
+				dates.add(sV.getDate().toLocalDate());
+			}
+		}
+		return dates;
 	}
 
 }

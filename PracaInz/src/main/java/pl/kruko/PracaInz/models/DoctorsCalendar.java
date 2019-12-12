@@ -1,7 +1,6 @@
 package pl.kruko.PracaInz.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +16,15 @@ public class DoctorsCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime dateTime;
-	//private LocalTime hour;
+	private LocalDate date;
 	@ManyToOne
 	private Doctor doctor;
 	@ManyToOne
 	private Institution institution;
 	@ManyToOne(optional = true)
 	private Patient patient;
+	@ManyToOne
+	private VisitType visitType;
 	
 	public DoctorsCalendar() {
 		// TODO Auto-generated constructor stub
@@ -37,11 +38,11 @@ public class DoctorsCalendar {
 		this.id = id;
 	}
 
-	public LocalDateTime getDate() {
+	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDate(LocalDateTime dateTime) {
+	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 	
@@ -77,6 +78,26 @@ public class DoctorsCalendar {
 		this.patient = patient;
 	}
 
+	public VisitType getVisitType() {
+		return visitType;
+	}
+
+	public void setVisitType(VisitType visitType) {
+		this.visitType = visitType;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public LocalDate getDate() {
+		return dateTime.toLocalDate();
+	}
+	
+	
+
+	
+	
 //	@Override
 //	public String toString() {
 //		return "DoctorsCalendar [id=" + id + ", date=" + date + ", hour=" + hour + ", doctor=" + doctor

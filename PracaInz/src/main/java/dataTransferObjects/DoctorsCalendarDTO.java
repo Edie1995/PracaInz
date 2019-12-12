@@ -3,10 +3,6 @@ package dataTransferObjects;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Institution;
-import pl.kruko.PracaInz.models.Patient;
-
 public class DoctorsCalendarDTO {
 
 	

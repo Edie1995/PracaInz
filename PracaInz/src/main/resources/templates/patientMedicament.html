@@ -1,0 +1,56 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/patientMedicamet.css">
+<title>Leczenie</title>
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a th:href="@{/profilePatient.html}">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+	</header>
+	<div>
+		<ul class="homeCheckList">
+
+			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
+			<li><a href="">Badania</a></li>
+			<li><a th:href="@{/calendar.html}">Kalendarz</a></li>
+			<li><a th:href="@{/homePatientDiagnosis.html}">Historia chorób</a></li>
+			<li><a th:href="@{/homePatientMedicaments.html}">Leczenie</a></li>
+		</ul>
+	</div>
+	<main>
+		<form th:action="@{/patientMedicament.html}" th:method="post">
+			<table>
+				<tr>
+					<th>Nazwa leku</th>
+					<th>Dawka</th>
+					<th>Dzienne dawkowanie</th>
+				</tr>
+				<tr th:each="medicament:${medicaments}">
+					<td th:text="${medicament.getMedicament().getName()}" />
+					<td th:text="${medicament.getDosage()} + ' mg'" />
+					<td th:text="${medicament.getFrequency()} +' razy dziennie'" />
+				</tr>
+			</table>
+			<div class="radio">
+				<input type="radio" id="radio1" name="statusNumber" th:value="0"><label
+					for="radio1">aktywne</label>
+			</div>
+			<div class="radio">
+				<input type="radio" id="radio2" name="statusNumber" th:value="1"><label
+					for="radio2">nieaktywne</label>
+			</div>
+			<input type="submit" class="button" value="wybierz">
+		</form>
+	</main>
+</body>
+
+</html>

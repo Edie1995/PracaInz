@@ -16,54 +16,55 @@
 		</ul>
 	</header>
 	<div>
-        <ul class="homeCheckList">
+		<ul class="homeCheckList">
 
-            <li> <a th:href="@{/homeSymptoms.html}">Obajwy</a> </li>
-            <li><a href="">Badania</a></li>
-            <li><a href="">Kalendarz</a></li>
-            <li><a href="">Historia chorób</a></li>
-            <li><a href="">Leczenie</a></li>
+			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
+			<li><a href="">Badania</a></li>
+			<li><a th:href="@{/calendar.html}">Kalendarz</a></li>
+			<li><a th:href="@{/homePatientDiagnosis.html}">Historia
+					chorób</a></li>
+			<li><a th:href="@{/homePatientMedicament.html}">Leczenie</a></li>
 
 
-        </ul>
+		</ul>
 
-    </div>
+	</div>
 	<div class="addSymptom">
-		<form th:action="@{/patientsSymptoms/add}" method="post">
+		<form th:action="@{/patientsSymptoms/add}" th:object="${symptomName}"
+			method="post">
 			<ul>
-				<li><input list="symptoms" name="symptomName" required>
-					<datalist id="symptoms">
+				<li><select th:field="*{id}" required>
+						<option value=""></option>
 						<option th:each="symptom: ${symptomsDic}"
-							th:value="${symptom.getName()}"></option>
-					</datalist></li>
-				<li><input type="date" name="date"
-					th:object="${date}" required></li>
+							th:value="${symptom.getId()}" th:utext="${symptom.getName()}"></option>
+				</select></li>
+				<li><input type="date" name="date" th:object="${date}" required></li>
 
 				<li><input class="button" type="submit" name="addSymptom"
 					value="Dodaj"></li>
 			</ul>
 		</form>
-<img src="css/img/Symptoms.png" alt="symptoms">
+		<img src="css/img/Symptoms.png" alt="symptoms">
 	</div>
 	<div class="searchSymptom">
-		<form th:action="@{patientsSymptoms/symptom/}" method="get">
+		<form th:action="@{patientsSymptoms/symptom/}"
+			th:object="${symptomName}" method="post">
 			<ul>
-				<li><input list="symptoms" name="symptomName"> <datalist
-						id="symptomsS">
+				<li><select th:field="*{id}">
+						<option value=""></option>
 						<option th:each="symptom: ${symptomsDic}"
-							th:value="${symptom.getName()}"></option>
-					</datalist></li>
+							th:value="${symptom.getId()}" th:utext="${symptom.getName()}"></option>
+				</select></li>
+
 				<li><input type="date" name="date" th:object="${date}"></li>
-				<li><input class="button" type="submit"
-					value="Szukaj"></li>
+				<li><input class="button" type="submit" value="Szukaj"></li>
 
 			</ul>
-		</form >
+		</form>
 		<form th:action="@{/homeSymptoms.html}" method="get">
-		<ul>
-		<li><input class="button" type="submit"
-					value="Wyczysc filtry"></li>
-		</ul>
+			<ul>
+				<li><input class="button" type="submit" value="Wyczysc filtry"></li>
+			</ul>
 		</form>
 		<ul>
 			<li>
@@ -81,7 +82,7 @@
 				</table>
 			</li>
 		</ul>
-		
+
 	</div>
 </body>
 

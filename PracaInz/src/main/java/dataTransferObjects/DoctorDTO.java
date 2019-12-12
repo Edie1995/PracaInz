@@ -2,18 +2,16 @@ package dataTransferObjects;
 
 import java.util.List;
 
-import pl.kruko.PracaInz.models.Institution;
-import pl.kruko.PracaInz.models.Specialization;
+import pl.kruko.PracaInz.models.Person;
 import pl.kruko.PracaInz.models.Status;
-import pl.kruko.PracaInz.models.User;
 
-public class DoctorDTO {
+public class DoctorDTO extends Person{
 	private Long id;
 	private int telephoneNumber;
 	private Status status;
 	private SpecializationDTO specializtaion;
 	private List<InstitutionDTO> institutions;
-	private User user;
+	private UserDTO user;
 	
 	public DoctorDTO() {
 	}
@@ -58,13 +56,20 @@ public class DoctorDTO {
 		this.institutions = institutions;
 	}
 
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return id + " " + getLastName() + ",<br> numer: " + telephoneNumber + ",<br> specjalizacja: " + specializtaion;
+	}
+	
+	
 	
 	
 }
