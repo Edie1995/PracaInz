@@ -63,12 +63,12 @@ public class PatientCalendarController {
 //		return scheduledVisitDTO;
 //	}
 
-	@PostMapping("patientCalendar/addEvent")
-	public void addEvent(HttpServletRequest request, @PathVariable String VisitTypeName, @PathVariable String date,
-			@PathVariable String idDoctor, @PathVariable String idInstitution) {
-		String login = currentUserNameSimple(request);
-		scheduledVisitService.addNewEvent(login, VisitTypeName, idDoctor, idInstitution, date);
-	}
+//	@PostMapping("patientCalendar/addEvent")
+//	public void addEvent(HttpServletRequest request, @PathVariable String VisitTypeName, @PathVariable String date,
+//			@PathVariable String idDoctor, @PathVariable String idInstitution) {
+//		String login = currentUserNameSimple(request);
+//		scheduledVisitService.addNewEvent(login, VisitTypeName, idDoctor, idInstitution, date);
+//	}
 
 	public String currentUserNameSimple(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -22,10 +24,10 @@ public class Institution {
 	private String adress;
 	@Column(nullable = true)
 	private Long phoneNumber;
-	private String status;
+	private Status status;
 	@ManyToMany
 	private List<Doctor> doctors;
-	
+
 	public Institution() {
 		// TODO Auto-generated constructor stub
 	}
@@ -45,7 +47,7 @@ public class Institution {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getCity() {
 		return city;
 	}
@@ -70,11 +72,11 @@ public class Institution {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -91,6 +93,5 @@ public class Institution {
 //		return "Institution [id=" + id + ", name=" + name + ", adress=" + adress + ", phoneNumber=" + phoneNumber
 //				+ ", status=" + status + ", doctors=" + doctors + "]";
 //	}
-	
-	
+
 }

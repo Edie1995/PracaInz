@@ -2,6 +2,8 @@ package dataTransferObjects;
 
 import java.util.List;
 
+import pl.kruko.PracaInz.models.Status;
+
 public class InstitutionDTO {
 
 	private Long id;
@@ -9,7 +11,7 @@ public class InstitutionDTO {
 	private String city;
 	private String adress;
 	private Long phoneNumber;
-	private String status;
+	private Status status;
 	private List<DoctorDTO> doctors;
 
 	public InstitutionDTO() {
@@ -56,11 +58,11 @@ public class InstitutionDTO {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 

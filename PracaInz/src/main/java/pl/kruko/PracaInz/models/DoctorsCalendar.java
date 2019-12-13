@@ -98,11 +98,11 @@ public class DoctorsCalendar {
 
 	
 	
-//	@Override
-//	public String toString() {
-//		return "DoctorsCalendar [id=" + id + ", date=" + date + ", hour=" + hour + ", doctor=" + doctor
-//				+ ", institution=" + institution + ", patient=" + patient + "]";
-//	}
+	@Override
+	public String toString() {
+		return "DoctorsCalendar [id=" + id + ", date=" + date + ", doctor=" + doctor
+				+ ", institution=" + institution + ", patient=" + patient + "]";
+	}
 	
 	
 }

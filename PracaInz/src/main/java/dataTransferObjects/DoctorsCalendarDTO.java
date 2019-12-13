@@ -1,17 +1,17 @@
 package dataTransferObjects;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class DoctorsCalendarDTO {
+public class DoctorsCalendarDTO implements Comparable<DoctorsCalendarDTO>{
 
 	
 	private Long id;
-	private LocalDate date;
-	private LocalTime hour;
+	private LocalDateTime date;
 	private DoctorDTO doctor;
 	private InstitutionDTO institution;
 	private PatientDTO patient;
+	private VisitTypeDTO visitType;
 	
 	public DoctorsCalendarDTO() {
 		// TODO Auto-generated constructor stub
@@ -23,18 +23,18 @@ public class DoctorsCalendarDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public LocalTime getHour() {
-		return hour;
+		return date.toLocalTime();
 	}
-	public void setHour(LocalTime hour) {
-		this.hour = hour;
-	}
+//	public void setHour(LocalDateTime date) {
+//		this.hour = hour;
+//	}
 	public DoctorDTO getDoctor() {
 		return doctor;
 	}
@@ -52,6 +52,25 @@ public class DoctorsCalendarDTO {
 	}
 	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
+	}
+
+	public VisitTypeDTO getVisitType() {
+		return visitType;
+	}
+
+	public void setVisitType(VisitTypeDTO visitType) {
+		this.visitType = visitType;
+	}
+
+	@Override
+	public String toString() {
+		return "DoctorsCalendarDTO [id=" + id + ", date=" + date  + ", doctor=" + doctor
+				+ ", institution=" + institution + ", patient=" + patient + ", visitType=" + visitType + "]";
+	}
+
+	@Override
+	public int compareTo(DoctorsCalendarDTO o) {
+		return this.date.compareTo(o.getDate());
 	}
 	
 	

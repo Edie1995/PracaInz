@@ -55,13 +55,13 @@
 					</li>
 
 					<li><label for="doctorName">Lekarz</label></li>
-					<li><select id="doctorName" name="doctorName" required>
+					<li><select id="doctorName" name="doctorName">
 							<option value=""></option>
 							<option th:each="doc: ${doctors}" th:value="${doc.getLastName()}"
 								th:utext="${doc.getLastName()}"></option>
 					</select></li>
 					<li><label for="startDate">Data wizyty</label></li>
-					<li><input type="date" class="text" name="date" id="startDate"></li>
+					<li><input type="date" class="text" name="dateString" id="startDate" required></li>
 
 					<li><label for="timeOfDay">Pora dnia</label></li>
 					<li><input list="timeOfDay" class="text" name="timeOfDay"

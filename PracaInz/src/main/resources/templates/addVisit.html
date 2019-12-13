@@ -1,33 +1,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/addVisitStyle.css">
-    <title>Dodaj wizyte</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/addVisitStyle.css">
+<title>Dodaj wizyte</title>
+<script type="text/javascript">
+	function getConfirmation() {
+		var retVal = confirm("Do you want to continue ?");
+		if (retVal == true) {
+			this.form.submit();
+			return true;
+		} else {
+
+			return false;
+		}
+	}
+</script>
 </head>
 
 <body>
-    <header>
-        <img src="css/img/logo.png" alt="application logo">
-        <ul>
-            <li><a th:href="@{/profilePatient.html}">Profil</a></li>
-            <li><a th:href="@{/logout}">Wyloguj</a></li>
-        </ul>
-    </header>
-    <div>
-        <ul class="homeCheckList">
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a th:href="@{/profilePatient.html}">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+	</header>
+	<div>
+		<ul class="homeCheckList">
 
-            <li> <a th:href="@{/homeSymptoms.html}">Obajwy</a> </li>
-            <li><a href="">Badania</a></li>
-            <li><a th:href="@{/calendar.html}">Kalendarz</a></li>
-            <li><a th:href="@{/homePatientDiagnosis.html}">Historia chorób</a></li>
-            <li><a th:href="@{/patientMedicament.html}">Leczenie</a></li>
-        </ul>
-    </div>
-    <main>
-    </main>
+			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
+			<li><a href="">Badania</a></li>
+			<li><a th:href="@{/calendar.html}">Kalendarz</a></li>
+			<li><a th:href="@{/homePatientDiagnosis.html}">Historia
+					chorób</a></li>
+			<li><a th:href="@{/patientMedicament.html}">Leczenie</a></li>
+		</ul>
+	</div>
+	<main>
+		<section th:each="date: ${dates}">
+
+			<h2 th:text="${date}"></h2>
+
+			<ul>
+				<li th:each="dC, doctorC:${doctorCalendar}">
+					<h3 th:if="${date}==${(dC.getDate().toLocalDate())}"
+						th:text="${dC.getHour()}"></h3>
+
+					<form th:action="@{/addVisit/add}" th:object="${doctorC}"
+						method="post"
+						onsubmit="return confirm('Czy na pewno chcesz się zapisać do tego lekarza?');">
+						<table th:if="${date}==${(dC.getDate().toLocalDate())}">
+							<tr>
+								<td th:text="${doctorC.count}" th:value="${dC.getVisitType()}"
+									th:utext="${dC.getVisitType().getName()}"></td>
+								<td th:value="${dC.getDoctor()}" th:utext="${dC.getDoctor()}"></td>
+								<td th:value="${dC.getInstitution()}"
+									th:utext="${dC.getInstitution()}"></td>
+								<td><input name="docorIdx" th:value="${doctorC.index}"
+									type="submit" th:utext="zarejestruj"></td>
+							</tr>
+
+						</table>
+					</form>
+
+
+
+				</li>
+			</ul>
+		</section>
+
+
+	</main>
 </body>
 
 </html>

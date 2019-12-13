@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.DoctorDTO;
+import dataTransferObjects.DoctorsCalendarDTO;
 import dataTransferObjects.InstitutionDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
@@ -91,7 +92,6 @@ public class ScheduledVisitService {
 
 	public Patient getPatient(String login) {
 		Patient patient = patientService.findByUser(login);
-//		return modelMapper.map(patientDTO, Patient.class);
 		return patient;
 	}
 
@@ -103,22 +103,30 @@ public class ScheduledVisitService {
 
 	}
 
-	public void addNewEvent(String login, String VisitTypeName, String institutionId, String doctorId, String date) {
-		LocalDateTime dateTime = LocalDateTime.parse(date);
+//	public void addNewEvent(String login, LocalDateTime dateTime, VisitTypeDTO visitType, DoctorDTO doctor, InstitutionDTO institution) {
+//		Patient patient = getPatient(login);
+//		PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
+//		if (findByPatientAndDate(login, dateTime).isEmpty()) {
+//			addNewScheduledVisit(patientDTO, visitType, institution, doctor, dateTime);
+//		} else {
+//			System.out.println("zaklepane");
+//		}
+//
+//	}
+
+	public void addNewEvent(String login, DoctorsCalendarDTO doctorCalendar) {
 		Patient patient = getPatient(login);
-		VisitTypeDTO visitType = visitTypeService.findByName(VisitTypeName);
-		DoctorDTO doctor = doctorService.findById(Long.parseLong(doctorId));
-		InstitutionDTO institution = institutionService.findById(Long.parseLong(institutionId));
 		PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
-		if (findByPatientAndDate(login, dateTime).isEmpty()) {
-			addNewScheduledVisit(patientDTO, visitType, institution, doctor, dateTime);
+		if (findByPatientAndDate(login, doctorCalendar.getDate()).isEmpty()) {
+			addNewScheduledVisit(patientDTO, doctorCalendar.getVisitType(), doctorCalendar.getInstitution(),
+					doctorCalendar.getDoctor(), doctorCalendar.getDate());
 		} else {
 			System.out.println("zaklepane");
 		}
 
 	}
 
-	public List<LocalDate> getDates( List<ScheduledVisitDTO> scheduledVisitDTO) {
+	public List<LocalDate> getDates(List<ScheduledVisitDTO> scheduledVisitDTO) {
 		List<LocalDate> dates = new ArrayList<LocalDate>();
 		for (ScheduledVisitDTO sV : scheduledVisitDTO) {
 			if (!dates.contains(sV.getDate().toLocalDate())) {
