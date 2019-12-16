@@ -8,7 +8,7 @@ public class VisitDTO implements Comparable<VisitDTO>{
 	private Long id;
 	private LocalDateTime date;
 	private PatientDTO patient;
-	private DoctorDTO doctor;
+	private DoctorForSearchDTO doctor;
 
 	public VisitDTO() {
 		// TODO Auto-generated constructor stub
@@ -38,11 +38,11 @@ public class VisitDTO implements Comparable<VisitDTO>{
 		this.patient = patient;
 	}
 
-	public DoctorDTO getDoctor() {
+	public DoctorForSearchDTO getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(DoctorDTO doctor) {
+	public void setDoctor(DoctorForSearchDTO doctor) {
 		this.doctor = doctor;
 	}
 

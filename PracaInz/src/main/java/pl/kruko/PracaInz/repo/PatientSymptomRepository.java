@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.PatientSymptom;
@@ -19,6 +20,7 @@ public interface PatientSymptomRepository extends JpaRepository<PatientSymptom, 
 
 	List<PatientSymptom> findAllByPatient(Patient patient);
 
+	@Query("SELECT p FROM PatientSymptom p WHERE  p.patient = :patient and (:symptom is null or p.symptom = :symptom) and (:date is null or p.date = :date)" )
 	List<PatientSymptom> findAllByPatientAndSymptomAndDate(Patient patient, Symptom symptom, LocalDate date);
 	
 	Optional<PatientSymptom> findByIdAndPatient(Long id, Patient patient);

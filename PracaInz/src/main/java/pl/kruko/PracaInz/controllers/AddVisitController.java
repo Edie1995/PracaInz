@@ -2,7 +2,6 @@ package pl.kruko.PracaInz.controllers;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import dataTransferObjects.DoctorDTO;
+import dataTransferObjects.DoctorForSearchDTO;
 import dataTransferObjects.DoctorsCalendarDTO;
 import dataTransferObjects.VisitTypeDTO;
+import dataTransferObjects.VisitTypeForSearchDTO;
 import pl.kruko.PracaInz.models.Type;
 import pl.kruko.PracaInz.service.DoctorService;
 import pl.kruko.PracaInz.service.DoctorsCalendarService;
@@ -26,53 +26,56 @@ import pl.kruko.PracaInz.service.VisitTypeService;
 @Controller
 public class AddVisitController {
 
+	
+	private ScheduledVisitService scheduledVisitService;
+	private DoctorService doctorService;
+	private DoctorsCalendarService doctorsCalendarService;
+	private VisitTypeService visitTypeService;
+	
+	private List<VisitTypeDTO> visitsTypesDTO;
+	private List<DoctorsCalendarDTO> doctorsCalendarDTO;
+	
+	
 	@Autowired
-	ScheduledVisitService scheduledVisitService;
-
-	@Autowired
-	DoctorService doctorService;
-
-	@Autowired
-	DoctorsCalendarService doctorsCalendarService;
-
-	@Autowired
-	VisitTypeService visitTypeService;
-	List<VisitTypeDTO> visitsTypesDTO;
-	List<DoctorsCalendarDTO> doctorsCalendarDTO;
+	public AddVisitController(ScheduledVisitService scheduledVisitService, DoctorService doctorService,
+			DoctorsCalendarService doctorsCalendarService, VisitTypeService visitTypeService) {
+		super();
+		this.scheduledVisitService = scheduledVisitService;
+		this.doctorService = doctorService;
+		this.doctorsCalendarService = doctorsCalendarService;
+		this.visitTypeService = visitTypeService;
+	}
+	
 
 	@GetMapping("/searchDoctor.html")
 	public String searchDoctor(HttpServletRequest request, Model model) {
 		model.addAttribute("visitTypes", visitsTypesDTO);
-		model.addAttribute("visitType", new VisitTypeDTO());
-		List<DoctorDTO> doctorsDTO = doctorService.findAll();
+		model.addAttribute("visitType", new VisitTypeForSearchDTO());
+		List<DoctorForSearchDTO> doctorsDTO = doctorService.findAll();
 		model.addAttribute("doctors", doctorsDTO);
-		model.addAttribute("doctor", new DoctorDTO());
-
 		return "searchDoctor.html";
 	}
 
 	@GetMapping("/searchDoctor/exam")
-	public String searchExam(HttpServletRequest request, Model model) {
+	public String searchExam(HttpServletRequest request) {
 		visitsTypesDTO = visitTypeService.findByType(Type.EXAMINATION);
 		return "redirect:/searchDoctor.html";
 	}
 
 	@GetMapping("/searchDoctor/visit")
-	public String searchDoctorVisit(HttpServletRequest request, Model model) {
+	public String searchDoctorVisit(HttpServletRequest request) {
 		visitsTypesDTO = visitTypeService.findByType(Type.MEDICAL_VISIT);
 		return "redirect:/searchDoctor.html";
 	}
 
 	@PostMapping("/addVisit/search")
 	public String visitProposition(HttpServletRequest request,
-			@ModelAttribute(value = "visitType") VisitTypeDTO visitTypeDTO, String dateString, String doctorName,
-			String city, Model model) {
+			@ModelAttribute(value = "visitType") VisitTypeForSearchDTO visitTypeDTO, String dateString, String doctorName,
+			String city) {
 		LocalDate date = LocalDate.parse(dateString);
 		doctorsCalendarDTO = doctorsCalendarService.findByDoctorAndDateAndTypeAndCity(doctorName, date, visitTypeDTO,
 				city);
-		model.addAttribute("doctorCalendar", doctorsCalendarDTO);
-		System.out.println(doctorsCalendarDTO);
-		return "redirect:/homeAddVisit.html";
+		return "redirect:/addVisit.html";
 	}
 
 	@GetMapping("/addVisit.html")
@@ -83,19 +86,12 @@ public class AddVisitController {
 		return "addVisit.html";
 	}
 
-	@GetMapping("/homeAddVisit.html")
-	public String addVisitHome(HttpServletRequest request, Model model) {
-		
-		return "redirect:/addVisit.html";
-	}
-
 	@PostMapping("/addVisit/add")
 	public String addNewVisit(HttpServletRequest request,
 			String docorIdx) {
 		DoctorsCalendarDTO doctorCalendar = doctorsCalendarDTO.get(Integer.valueOf(docorIdx));
 		String login = currentUserNameSimple(request);
 		scheduledVisitService.addNewEvent(login, doctorCalendar);
-		doctorsCalendarService.addPatientToDoctorCalendar(login, doctorCalendar);
 		return "redirect:/addVisit.html";
 	}
 

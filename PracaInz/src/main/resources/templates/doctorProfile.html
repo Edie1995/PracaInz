@@ -14,10 +14,10 @@
 		<img src="css/img/logo.png" alt="application logo">
 		<ul>
 			<li><a th:href="@{/doctorProfile.html}">Profil</a></li>
-            <li><a th:href="@{/logout}">Wyloguj</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
 		</ul>
 
-		
+
 	</header>
 	<div>
 		<ul class="homeCheckList">
@@ -40,38 +40,43 @@
 				</p>
 			</li>
 
-			<li><form th:action="@{/updateDoctorName}"
-					th:object="${updateDoctor}" method="post" onsubmit="return confirm('Czy na pewno chcesz zmienić nazwisko?');">
-					<input type="text" class="text" id="lastName"
-						th:field="*{lastName}" required> <input type="submit"
-						class="button" name="changeDoctorSurname" value="Zmień"
-						>
-				</form></li>
+			<li>
+				<form th:action="@{/updateDoctorName}" method="post"
+					onsubmit="return confirm('Czy na pewno chcesz zmienić nazwisko?');">
+					<input type="text" class="text" id="lastName" name="doctorName"
+						required> <input type="submit" class="button"
+						name="changeDoctorSurname" value="Zmień">
+				</form>
+			</li>
 
 			<li>
 
 				<p>
-					Mail: <span th:text="${doctor.getTelephoneNumber()}"></span>
+					Numer telefonu: <span th:text="${doctor.getTelephoneNumber()}"></span>
 				</p>
 			</li>
-			<li><form th:action="@{/updateNumber}"
-					th:object="${updateDoctor}" method="post" onsubmit="return confirm('Czy na pewno chcesz zmienić numer?');">
-					<input type="tel" class="text" name="" id=""
-						th:field="*{telephoneNumber}" pattern="[0-9]{9}" required>
+			<li>
+				
+				<form th:action="@{/updateNumber}" 
+					method="post"
+					onsubmit="return confirm('Czy na pewno chcesz zmienić numer?');">
+					<input type="tel" class="text" name="doctorNumber" id=""
+						 pattern="[0-9]{9}" required>
 					<input type="submit" class="button" name="changeNumber"
-						value="Zmień"
-						>
-				</form></li>
+						value="Zmień">
+				</form>
+			</li>
 
 			<li>
 				<p>Hasło:</p>
 			</li>
-			<li><form th:action="@{/updateDoctorPassword}"
-					th:object="${user}" method="post" onsubmit="return confirm('Czy na pewno chcesz zmienić hasło?');">
-					<input type="password" class="text" name="" id=""
-						th:field="*{password}" required> <input type="submit"
-						class="button" name="changeDoctorPassword" value="Zmień"
-						>
+			<li>
+				<form th:action="@{/updateDoctorPassword}"
+					method="post"
+					onsubmit="return confirm('Czy na pewno chcesz zmienić hasło?');">
+					<input type="password" class="text" name="userPassword" id=""
+						required> <input type="submit"
+						class="button" name="changeDoctorPassword" value="Zmień">
 				</form></li>
 		</ul>
 	</main>

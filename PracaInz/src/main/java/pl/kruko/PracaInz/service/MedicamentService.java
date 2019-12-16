@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dataTransferObjects.MedicamentDTO;
-import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Medicament;
 import pl.kruko.PracaInz.repo.MedicamentRepository;
 
@@ -24,10 +23,6 @@ public class MedicamentService {
 		this.medicamentRepository = medicamentRepository;
 	}
 
-//	private Medicament findById(Long id) {
-//		return medicamentRepository.findById(id).orElse(new Medicament());
-//	}
-//
 	public List<Medicament> findByName(String name) {
 		return medicamentRepository.findByName(name);
 	}

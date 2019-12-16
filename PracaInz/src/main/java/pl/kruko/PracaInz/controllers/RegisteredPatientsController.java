@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dataTransferObjects.ScheduledVisitDTO;
-import pl.kruko.PracaInz.service.DoctorService;
 import pl.kruko.PracaInz.service.ScheduledVisitService;
-import pl.kruko.PracaInz.service.UserService;
 
 @Controller
 public class RegisteredPatientsController {
-	@Autowired
-	DoctorService doctorService;
-	@Autowired
-	UserService userService;
-	@Autowired
-	ScheduledVisitService scheduledVisitService;
 
-	List<ScheduledVisitDTO> visits;
-	LocalDate chosenDate;
+	private ScheduledVisitService scheduledVisitService;
+	private List<ScheduledVisitDTO> visits;
+	private LocalDate chosenDate;
+
+	@Autowired
+	public RegisteredPatientsController(ScheduledVisitService scheduledVisitService) {
+		super();
+		this.scheduledVisitService = scheduledVisitService;
+	}
 
 	public String currentUserNameSimple(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
@@ -44,7 +43,7 @@ public class RegisteredPatientsController {
 	}
 
 	@GetMapping("/homeRegisteredPatient.html")
-	public String getHomeRegisteredPatients(HttpServletRequest request, Model model) {
+	public String getHomeRegisteredPatients(HttpServletRequest request) {
 		String login = currentUserNameSimple(request);
 		chosenDate = LocalDate.now();
 		visits = scheduledVisitService.findByDoctorAndDate(login, chosenDate);
@@ -52,7 +51,7 @@ public class RegisteredPatientsController {
 	}
 
 	@PostMapping("/registeredPatients/search")
-	public String getDateRegisteredPatients(HttpServletRequest request, String date, Model model) {
+	public String getDateRegisteredPatients(HttpServletRequest request, String date) {
 		String login = currentUserNameSimple(request);
 		chosenDate = LocalDate.parse(date);
 		visits = scheduledVisitService.findByDoctorAndDate(login, chosenDate);
@@ -65,6 +64,5 @@ public class RegisteredPatientsController {
 		redirectAttributes.addFlashAttribute("visit", visit);
 		return "redirect:/homechosenPatient.html";
 	}
-	
-	
+
 }

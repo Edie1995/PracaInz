@@ -14,7 +14,6 @@ import dataTransferObjects.DiagnosisDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Diagnosis;
-import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Status;
 import pl.kruko.PracaInz.models.Visit;
 import pl.kruko.PracaInz.repo.DiagnosisRepository;

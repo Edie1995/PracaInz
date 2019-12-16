@@ -3,61 +3,57 @@ package pl.kruko.PracaInz.controllers;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import dataTransferObjects.DoctorDTO;
-import dataTransferObjects.UserDTO;
+import dataTransferObjects.DoctorForSearchDTO;
 import pl.kruko.PracaInz.service.DoctorService;
 import pl.kruko.PracaInz.service.UserService;
 
 @Controller
 public class DoctorProfileController {
-	@Autowired
-	DoctorService doctorService;
-	@Autowired
-	UserService userService;
 
-	DoctorDTO doctorDTO;
-	UserDTO userDTO;
+	private DoctorService doctorService;
+	private UserService userService;
+
+	@Autowired
+	public DoctorProfileController(DoctorService doctorService, UserService userService) {
+		super();
+		this.doctorService = doctorService;
+		this.userService = userService;
+	}
 
 	@GetMapping("/doctorProfile.html")
 	public String showAll(HttpServletRequest request, Model model) {
 		String login = currentUserNameSimple(request);
-		doctorDTO = doctorService.findDTObyUser(login);
-		UserDTO user = userService.findDTOByLogin(login);
+		DoctorForSearchDTO doctorDTO = doctorService.findDTObyUser(login);
 		model.addAttribute("doctor", doctorDTO);
-		model.addAttribute("updateDoctor", new DoctorDTO());
-		model.addAttribute("user", user);
 		return "doctorProfile.html";
 
 	}
 
 	@PostMapping("/updateDoctorPassword")
-	public String updateDoctorPassword(HttpServletRequest request, @ModelAttribute("userDTO") UserDTO userDTO) {
+	public String updateDoctorPassword(HttpServletRequest request, String userPassword) {
 		String login = currentUserNameSimple(request);
-		doctorService.updatePassword(login, userDTO);
+		userService.updatePassword(login, userPassword);
 		return "redirect:/doctorProfile.html";
 	}
 
 	@PostMapping("/updateDoctorName")
-	public String updateDoctorName(HttpServletRequest request, @ModelAttribute("doctorDTO") DoctorDTO doctorDTO) {
+	public String updateDoctorName(HttpServletRequest request, String doctorName) {
 		String login = currentUserNameSimple(request);
-		doctorService.upateLastName(login, doctorDTO);
+		doctorService.upateLastName(login, doctorName);
 		return "redirect:/doctorProfile.html";
 	}
 
 	@PostMapping("/updateNumber")
-	public String updateDoctorNumber(HttpServletRequest request, @ModelAttribute("doctorDTO") DoctorDTO doctorDTO) {
+	public String updateDoctorNumber(HttpServletRequest request, String doctorNumber) {
 		String login = currentUserNameSimple(request);
-		doctorService.updateNumber(login, doctorDTO);
+		doctorService.updateNumber(login, doctorNumber);
 		return "redirect:/doctorProfile.html";
 	}
 
@@ -67,7 +63,5 @@ public class DoctorProfileController {
 		System.out.println(login);
 		return login;
 	}
-	
-	
 
 }

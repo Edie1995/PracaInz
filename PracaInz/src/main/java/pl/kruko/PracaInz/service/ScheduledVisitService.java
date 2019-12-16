@@ -17,49 +17,42 @@ import dataTransferObjects.DoctorsCalendarDTO;
 import dataTransferObjects.InstitutionDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
+import dataTransferObjects.ScheduledVisitToCalendarDTO;
 import dataTransferObjects.VisitTypeDTO;
 import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.ScheduledVisit;
-import pl.kruko.PracaInz.models.VisitType;
 import pl.kruko.PracaInz.repo.ScheduledVisitRepository;
 
 @Service
 public class ScheduledVisitService {
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private VisitTypeService visitTypeService;
-	@Autowired
-	private DoctorService doctorService;
-//	@Autowired
-//	private InstitutionService institutionService;
 
-	@Autowired
+	private PatientService patientService;
+	private DoctorService doctorService;
+	private DoctorsCalendarService doctorsCalendarService;
 	private ScheduledVisitRepository scheduledVisitRepository;
+
 	private ModelMapper modelMapper = new ModelMapper();
 	private Type listType = new TypeToken<List<ScheduledVisitDTO>>() {
 	}.getType();
 
-	private List<ScheduledVisitDTO> scheduledVisitDTO;
-
 	@Autowired
-	public ScheduledVisitService(ScheduledVisitRepository scheduledVisitRepository) {
+	public ScheduledVisitService(PatientService patientService,
+			DoctorService doctorService, DoctorsCalendarService doctorsCalendarService,
+			ScheduledVisitRepository scheduledVisitRepository) {
 		super();
+		this.patientService = patientService;
+		this.doctorService = doctorService;
+		this.doctorsCalendarService = doctorsCalendarService;
 		this.scheduledVisitRepository = scheduledVisitRepository;
 	}
 
-	public List<ScheduledVisitDTO> findByPatientToDTO(String login) {
+	public List<ScheduledVisitToCalendarDTO> findByPatient(String login) {
 		Patient patient = getPatient(login);
 		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatient(patient);
-		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
-		return scheduledVisitDTO;
-	}
-
-	public List<ScheduledVisitDTO> findByPatient(String login) {
-		Patient patient = getPatient(login);
-		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatient(patient);
-		scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
+		Type listType = new TypeToken<List<ScheduledVisitToCalendarDTO>>() {
+		}.getType();
+		List<ScheduledVisitToCalendarDTO> scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
 		Collections.sort(scheduledVisitDTO);
 		return scheduledVisitDTO;
 	}
@@ -67,29 +60,9 @@ public class ScheduledVisitService {
 	public List<ScheduledVisitDTO> findByPatientAndDate(String login, LocalDateTime date) {
 		Patient patient = getPatient(login);
 		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByPatientAndDate(patient, date);
-		scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
+		List<ScheduledVisitDTO> scheduledVisitDTO = modelMapper.map(scheduledVisits, listType);
 		return scheduledVisitDTO;
 	}
-
-	public List<ScheduledVisitDTO> findByPatientAndVisitType(String login, String typeName) {
-		Patient patient = getPatient(login);
-		VisitTypeDTO visitTypeDTO = visitTypeService.findByName(typeName);
-		VisitType visitType = modelMapper.map(visitTypeDTO, VisitType.class);
-		List<ScheduledVisit> scheduledVisit = scheduledVisitRepository.findByPatientAndVisitType(patient, visitType);
-		scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
-		return scheduledVisitDTO;
-	}
-
-//	public List<ScheduledVisitDTO> findByPatientAndType(String login, int type) {
-//		Patient patient = getPatient(login);
-//		List<VisitType> visitType = visitTypeService.findByType(type);
-//		List<ScheduledVisit> scheduledVisit = new ArrayList<>();
-//		for (VisitType v : visitType) {
-//			scheduledVisit.addAll(scheduledVisitRepository.findByPatientAndVisitType(patient, v));
-//		}
-//		scheduledVisitDTO = modelMapper.map(scheduledVisit, listType);
-//		return scheduledVisitDTO;
-//	}
 
 	public Patient getPatient(String login) {
 		Patient patient = patientService.findByUser(login);
@@ -98,22 +71,11 @@ public class ScheduledVisitService {
 
 	public void addNewScheduledVisit(PatientDTO patient, VisitTypeDTO visitType, InstitutionDTO institution,
 			DoctorDTO doctor, LocalDateTime dateTime) {
-		ScheduledVisitDTO scheduledVisitDTO = new ScheduledVisitDTO(dateTime, visitType, doctor, institution, patient);
+		ScheduledVisitToCalendarDTO scheduledVisitDTO = new ScheduledVisitToCalendarDTO(dateTime, visitType, doctor, institution, patient);
 		ScheduledVisit scheduledVisit = modelMapper.map(scheduledVisitDTO, ScheduledVisit.class);
 		scheduledVisitRepository.save(scheduledVisit);
 
 	}
-
-//	public void addNewEvent(String login, LocalDateTime dateTime, VisitTypeDTO visitType, DoctorDTO doctor, InstitutionDTO institution) {
-//		Patient patient = getPatient(login);
-//		PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
-//		if (findByPatientAndDate(login, dateTime).isEmpty()) {
-//			addNewScheduledVisit(patientDTO, visitType, institution, doctor, dateTime);
-//		} else {
-//			System.out.println("zaklepane");
-//		}
-//
-//	}
 
 	public void addNewEvent(String login, DoctorsCalendarDTO doctorCalendar) {
 		Patient patient = getPatient(login);
@@ -124,12 +86,13 @@ public class ScheduledVisitService {
 		} else {
 			System.out.println("zaklepane");
 		}
+		doctorsCalendarService.addPatientToDoctorCalendar(login, doctorCalendar);
 
 	}
 
-	public List<LocalDate> getDates(List<ScheduledVisitDTO> scheduledVisitDTO) {
+	public List<LocalDate> getDates(List<ScheduledVisitToCalendarDTO> scheduledVisitDTO) {
 		List<LocalDate> dates = new ArrayList<LocalDate>();
-		for (ScheduledVisitDTO sV : scheduledVisitDTO) {
+		for (ScheduledVisitToCalendarDTO sV : scheduledVisitDTO) {
 			if (!dates.contains(sV.getDate().toLocalDate())) {
 				dates.add(sV.getDate().toLocalDate());
 			}

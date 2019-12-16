@@ -33,16 +33,4 @@ public class VisitTypeService {
 		return visitTypesDTO;
 	}
 
-	public VisitTypeDTO findByName(String name) {
-		VisitType visitType = visitTypeRepository.findByName(name);
-		VisitTypeDTO visitTypeDTO = modelMapper.map(visitType,VisitTypeDTO.class);
-		return visitTypeDTO;
-	}
-	
-	public List<VisitTypeDTO> findAll(){
-		List<VisitType> visitTypes = visitTypeRepository.findAll();
-		List<VisitTypeDTO> visitTypesDTO = modelMapper.map(visitTypes, listType);
-		return visitTypesDTO;
-	}
-
 }

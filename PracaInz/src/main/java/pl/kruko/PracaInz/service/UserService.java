@@ -10,6 +10,7 @@ import pl.kruko.PracaInz.repo.UserRepository;
 
 @Service
 public class UserService {
+	
 	private UserRepository userRepository;
 	
 	private ModelMapper modelMapper = new ModelMapper();
@@ -32,4 +33,11 @@ public class UserService {
 	public void save(User user) {
 		userRepository.save(user);
 	}
+	
+	public void updatePassword(String login, String password) {
+		User user = findByLogin(login);
+		user.setPassword(password);
+		save(user);
+	}
+
 }

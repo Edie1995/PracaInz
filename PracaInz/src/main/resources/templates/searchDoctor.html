@@ -31,16 +31,6 @@
 		<div>
 			<form th:action="@{/addVisit/search}" method="post">
 				<ul>
-
-					<!--<li><label for="types"></label>Wizyta czy badanie?</li>
-				<li>
-
-						<select th:object="${type}" required>
-							<option th:value=0 th:utext="badanie"></option>
-							<option th:value=1 th:utext="wizyta"></option>
-						</select>
-				</li>-->
-
 					<li><label for="visitName">Rodzaj wizyty</label></li>
 					<li><div th:object="${visitType}">
 							<select th:field="*{id}" required>

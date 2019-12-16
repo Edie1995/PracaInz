@@ -8,11 +8,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dataTransferObjects.DoctorDTO;
-import dataTransferObjects.PatientDTO;
-import dataTransferObjects.UserDTO;
+import dataTransferObjects.DoctorForSearchDTO;
 import pl.kruko.PracaInz.models.Doctor;
-import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Specialization;
 import pl.kruko.PracaInz.models.User;
 import pl.kruko.PracaInz.repo.DoctorRepository;
@@ -20,47 +17,36 @@ import pl.kruko.PracaInz.repo.DoctorRepository;
 @Service
 public class DoctorService {
 
-	@Autowired
 	private DoctorRepository doctorRepository;
-	@Autowired
 	private SpecializationService specializationService;
-	@Autowired
 	private UserService userService;
+	private ModelMapper modelMapper = new ModelMapper();
 
-	public DoctorService(DoctorRepository doctorRepository) {
+	@Autowired
+	public DoctorService(DoctorRepository doctorRepository, SpecializationService specializationService,
+			UserService userService) {
 		super();
 		this.doctorRepository = doctorRepository;
+		this.specializationService = specializationService;
+		this.userService = userService;
 	}
-
-	private ModelMapper modelMapper = new ModelMapper();
-	private Type listType = new TypeToken<List<DoctorDTO>>() {
-	}.getType();
 
 	public List<Doctor> findByNameAndSpecialization(String lastName, String specializationName, String city) {
 		Specialization specialization = specializationService.findByName(specializationName);
 		List<Doctor> doctors = doctorRepository.findByNameAndSpecialization(lastName, specialization);
 		return doctors;
 	}
-
-	public DoctorDTO findById(Long id) {
-		Doctor doctor = doctorRepository.findById(id).orElse(null);
-		return modelMapper.map(doctor, DoctorDTO.class);
-	}
-
-	public List<DoctorDTO> findAll() {
+	
+	public List<DoctorForSearchDTO> findAll() {
 		List<Doctor> doctors = doctorRepository.findAll();
+		Type listType = new TypeToken<List<DoctorForSearchDTO>>() {
+		}.getType();
 		return modelMapper.map(doctors, listType);
 	}
 
-	public void updatePassword(String login, UserDTO userDTO) {
-		User user = userService.findByLogin(login);
-		user.setPassword(userDTO.getPassword());
-		userService.save(user);
-	}
-
-	public DoctorDTO findDTObyUser(String login) {
+	public DoctorForSearchDTO findDTObyUser(String login) {
 		Doctor doctor = findByUser(login);
-		return modelMapper.map(doctor, DoctorDTO.class);
+		return modelMapper.map(doctor, DoctorForSearchDTO.class);
 	}
 
 	public Doctor findByUser(String login) {
@@ -69,15 +55,15 @@ public class DoctorService {
 		return doctor;
 	}
 
-	public void upateLastName(String login, DoctorDTO doctorDTO) {
+	public void upateLastName(String login, String doctorName) {
 		Doctor doctor = findByUser(login);
-		doctor.setLastName(doctorDTO.getLastName());
+		doctor.setLastName(doctorName);
 		doctorRepository.save(doctor);
 	}
 
-	public void updateNumber(String login, DoctorDTO doctorDTO) {
+	public void updateNumber(String login, String doctorNumber) {
 		Doctor doctor = findByUser(login);
-		doctor.setTelephoneNumber(doctorDTO.getTelephoneNumber());
+		doctor.setTelephoneNumber(Long.parseLong(doctorNumber));
 		doctorRepository.save(doctor);
 	}
 

@@ -24,7 +24,8 @@
 			<li><a th:href="@{/homeSymptoms.html}">Obajwy</a></li>
 			<li><a href="">Badania</a></li>
 			<li><a th:href="@{/calendar.html}">Kalendarz</a></li>
-			<li><a th:href="@{/homePatientDiagnosis.html}">Historia chorób</a></li>
+			<li><a th:href="@{/homePatientDiagnosis.html}">Historia
+					chorób</a></li>
 			<li><a th:href="@{/homePatientMedicament.html}">Leczenie</a></li>
 
 
@@ -44,12 +45,10 @@
 				</p>
 			</li>
 
-			<li><form th:action="@{/updateName}" th:object="${updatePatient}"
-					method="post">
-					<input type="text" class="text" id="lastName"
-						th:field="*{lastName}" required> <input type="submit"
-						class="button" name="changeSurname" id="changeSurname"
-						value="Zmień">
+			<li><form th:action="@{/updateName}" method="post">
+					<input type="text" class="text" id="lastName" name="lastName"
+						required> <input type="submit" class="button"
+						name="changeSurname" id="changeSurname" value="Zmień">
 				</form></li>
 
 			<li>
@@ -58,9 +57,8 @@
 					Mail: <span th:text="${patient.getMail()}"></span>
 				</p>
 			</li>
-			<li><form th:action="@{/updateEmail}" th:object="${updatePatient}"
-					method="post">
-					<input type="email" class="text" name="" id="" th:field="*{mail}" required>
+			<li><form th:action="@{/updateEmail}" method="post">
+					<input type="email" class="text" name="mail" id="" required>
 					<input type="submit" class="button" name="changeEmail"
 						id="changeEmail" value="Zmień">
 				</form></li>
@@ -75,10 +73,9 @@
 			<li>
 				<p>Hasło:</p>
 			</li>
-			<li><form th:action="@{/updatePassword}" th:object="${user}"
-					method="post">
-					<input type="password" class="text" name="" id="" th:field="*{password}" required> <input
-						type="submit" class="button" name="changePassword"
+			<li><form th:action="@{/updatePassword}" method="post">
+					<input type="password" class="text" name="password" id="" required>
+					<input type="submit" class="button" name="changePassword"
 						id="changePassword" value="Zmień">
 				</form></li>
 		</ul>

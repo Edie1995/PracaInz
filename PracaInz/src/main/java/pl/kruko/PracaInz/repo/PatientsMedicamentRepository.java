@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import pl.kruko.PracaInz.models.Medicament;
-import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.PatientsMedicament;
 import pl.kruko.PracaInz.models.Status;
 import pl.kruko.PracaInz.models.Visit;
@@ -20,7 +19,5 @@ public interface PatientsMedicamentRepository extends JpaRepository<PatientsMedi
 	List<PatientsMedicament> findByVisitAndMedicament(Visit visit, Medicament medicament);
 	
 	List<PatientsMedicament> findByVisit(Visit visit);
-	
-//	List<PatientsMedicament> findByPatient(Patient patient);
 	
 }

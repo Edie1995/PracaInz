@@ -15,22 +15,21 @@ import pl.kruko.PracaInz.repo.SymptomRepository;
 @Service
 public class SymptomService {
 
-	@Autowired
 	private SymptomRepository symptomRepository;
+
 	private ModelMapper modelMapper = new ModelMapper();
 	private Type listType = new TypeToken<List<SymptomDTO>>() {
 	}.getType();
-	
-	public Symptom findById(Long id) {
-		return symptomRepository.findById(id).orElse(null);
+
+	@Autowired
+	public SymptomService(SymptomRepository symptomRepository) {
+		super();
+		this.symptomRepository = symptomRepository;
 	}
 	
-	public Symptom findByName(String name) {
-		return symptomRepository.findByName(name);
-	}
-	public List<SymptomDTO> findAll(){
+	public List<SymptomDTO> findAll() {
 		List<Symptom> symptoms = symptomRepository.findAll();
 		return modelMapper.map(symptoms, listType);
 	}
-	
+
 }

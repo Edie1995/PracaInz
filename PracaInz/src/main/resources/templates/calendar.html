@@ -28,22 +28,19 @@
 		</ul>
 	</div>
 	<main>
-		<!--  <form th:action="@{/calendar.html}" method="get" >
-	<input type="button" name="byStatus" value="1" checked>Przeszłe
-	<input type="button" name="byStatus" value="2">Zaplanowane
-	<input type="button" name="byStatus" value="3">Wszystkie
-	</form>-->
 		<section th:each="date: ${dates}">
 			<h2 th:text="${date}"></h2>
 			<ul>
-				<li th:each="visit: ${visits}"><h3
-						th:if="${date}==${(visit.getDate().toLocalDate())}"
-						th:text="${visit.getHour()}"></h3>
-					<p th:if="${date}==${(visit.getDate().toLocalDate())}"
-						th:utext="${visit}"></p></li>
+				<li th:each="visit: ${visits}"
+					th:if="${date}==${(visit.getDate().toLocalDate())}">
+					<h3 th:text="${visit.getHour()}"></h3>
+					<p th:utext="'typ wizyty: '+ ${visit.getVisitType().getName()}"></p>
+					<p th:utext="'lekarz: ' + ${visit.getDoctor().getFirstName()} + ' ' + ${visit.getDoctor().getLastName()}"></p>
+					<p th:utext="'placówka: ' + ${visit.getInstitution().getName()}"></p>
+					<p th:utext="'adres: ' + ${visit.getInstitution().getAdress()} + ', ' + ${visit.getInstitution().getCity()}"></p>
+				</li>
 			</ul>
 		</section>
-
 	</main>
 	<form th:action="@{/searchDoctor/visit}" method="get">
 		<input class="button1" type="submit" value="umów wizytę">

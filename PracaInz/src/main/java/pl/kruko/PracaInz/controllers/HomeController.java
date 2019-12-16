@@ -21,25 +21,25 @@ public class HomeController {
 		return "login.html";
 	}
 
-	@GetMapping("/home")
+	@GetMapping("/home.html")
 	public String bad(HttpServletRequest request) {
 		if (request.isUserInRole("PATIENT")) {
-			return "redirect:/patientHome.html";
+			return "patientHome.html";
 		} else if (request.isUserInRole("DOCTOR")) {
-			return "redirect:/doctorHome.html";
+			return "doctorHome.html";
 		} else {
 			return "/login-error.html";
 		}
 	}
 
-	@RequestMapping("/patientHome.html")
-	public String patientHome() {
-		return "patientHome.html";
-	}
-
-	@RequestMapping("/doctorHome.html")
-	public String doctorHome() {
-		return "doctorHome.html";
-	}
+//	@RequestMapping("/patientHome.html")
+//	public String patientHome() {
+//		return "patientHome.html";
+//	}
+//
+//	@RequestMapping("/doctorHome.html")
+//	public String doctorHome() {
+//		return "doctorHome.html";
+//	}
 
 }

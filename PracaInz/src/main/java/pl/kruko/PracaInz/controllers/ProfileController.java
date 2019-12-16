@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import dataTransferObjects.PatientDTO;
@@ -21,58 +20,52 @@ import pl.kruko.PracaInz.service.UserService;
 @Controller
 public class ProfileController {
 
-	@Autowired
-	PatientService patientService;
-	@Autowired
-	UserService userService;
+	private PatientService patientService;
+	private UserService userService;
 
-	PatientDTO patientDTO;
-	UserDTO userDTO;
+	@Autowired
+	public ProfileController(PatientService patientService, UserService userService) {
+		super();
+		this.patientService = patientService;
+		this.userService = userService;
+	}
 
 	@PostMapping("/updateName")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public String updatePatientName(HttpServletRequest request, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
+	public String updatePatientName(HttpServletRequest request, String lastName) {
 		String login = currentUserNameSimple(request);
-		System.out.println(patientDTO);
-		System.out.println("lastName" + patientDTO.getLastName());
-			patientService.upateLastName(login, patientDTO);
+		patientService.upateLastName(login, lastName);
 		return "redirect:/profilePatient.html";
 	}
-	
+
 	@PostMapping("/updateEmail")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public String updatePatientMail(HttpServletRequest request, @ModelAttribute("patientDTO") PatientDTO patientDTO) {
+	public String updatePatientMail(HttpServletRequest request, String mail) {
 		String login = currentUserNameSimple(request);
-		System.out.println(patientDTO);
-			patientService.updateMail(login, patientDTO);
+		patientService.updateMail(login, mail);
 		return "redirect:/profilePatient.html";
 	}
-	
+
 	@PostMapping("/updatePassword")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public String updatePatientPassword(HttpServletRequest request, @ModelAttribute("userDTO") UserDTO userDTO) {
+	public String updatePatientPassword(HttpServletRequest request, String password) {
 		String login = currentUserNameSimple(request);
-		System.out.println(userDTO);
-			patientService.updatePassword(login, userDTO);
+		userService.updatePassword(login, password);
 
 		return "redirect:/profilePatient.html";
 	}
-	
 
 	public String currentUserNameSimple(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		String login = principal.getName();
-		System.out.println(login);
 		return login;
 	}
-	
-	
 
 	@GetMapping("/profilePatient.html")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public String showAll(HttpServletRequest request, Model model) {
 		String login = currentUserNameSimple(request);
-		patientDTO = patientService.findDTObyUser(login);
+		PatientDTO patientDTO = patientService.findDTObyUser(login);
 		UserDTO user = userService.findDTOByLogin(login);
 		model.addAttribute("patient", patientDTO);
 		model.addAttribute("updatePatient", new PatientDTO());
@@ -80,6 +73,5 @@ public class ProfileController {
 		return "profilePatient.html";
 
 	}
-	
-	
+
 }

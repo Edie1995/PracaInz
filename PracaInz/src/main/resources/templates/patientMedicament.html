@@ -35,7 +35,7 @@
 					<th>Dzienne dawkowanie</th>
 				</tr>
 				<tr th:each="medicament:${medicaments}">
-					<td th:text="${medicament.getMedicament().getName()}" />
+					<td th:text="${medicament.getMedicament().getName()} + ' ' + ${medicament.getMedicament().getProducent()} + ' ' + ${medicament.getMedicament().getDose()}" />
 					<td th:text="${medicament.getDosage()} + ' mg'" />
 					<td th:text="${medicament.getFrequency()} +' razy dziennie'" />
 				</tr>

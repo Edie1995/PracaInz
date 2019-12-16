@@ -1,7 +1,6 @@
 package pl.kruko.PracaInz.controllers;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import dataTransferObjects.DoctorDTO;
 import dataTransferObjects.MedicamentDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import dataTransferObjects.SymptomDTO;
 import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.service.DiagnosisService;
-import pl.kruko.PracaInz.service.DoctorService;
 import pl.kruko.PracaInz.service.MedicamentService;
 import pl.kruko.PracaInz.service.PatientSymptomService;
 import pl.kruko.PracaInz.service.PatientsMedicamentService;
@@ -30,24 +27,31 @@ import pl.kruko.PracaInz.service.VisitService;
 @Controller
 public class ChosenPatientController {
 
-	@Autowired
-	DoctorService doctorService;
-	@Autowired
-	VisitService visitService;
-	@Autowired
-	PatientsMedicamentService patientsMedicamentService;
-	@Autowired
-	PatientSymptomService patientSymptomService;
-	@Autowired
-	DiagnosisService diagnosisService;
-	@Autowired
-	SymptomService symptomService;
-	@Autowired
-	MedicamentService medicamentService;
+	private VisitService visitService;
+	private PatientsMedicamentService patientsMedicamentService;
+	private PatientSymptomService patientSymptomService;
+	private DiagnosisService diagnosisService;
+	private SymptomService symptomService;
+	private MedicamentService medicamentService;
+	
+	private ScheduledVisitDTO scheduledVisit;
+	private VisitDTO visitDTO;
 
-	ScheduledVisitDTO scheduledVisit;
-	VisitDTO visitDTO;
+	
+	@Autowired
+	public ChosenPatientController(VisitService visitService,
+			PatientsMedicamentService patientsMedicamentService, PatientSymptomService patientSymptomService,
+			DiagnosisService diagnosisService, SymptomService symptomService, MedicamentService medicamentService) {
+		super();
+		this.visitService = visitService;
+		this.patientsMedicamentService = patientsMedicamentService;
+		this.patientSymptomService = patientSymptomService;
+		this.diagnosisService = diagnosisService;
+		this.symptomService = symptomService;
+		this.medicamentService = medicamentService;
+	}
 
+	
 	@GetMapping("/chosenPatient.html")
 	public String getPatient(HttpServletRequest request, Model model) {
 		List<SymptomDTO> symptomsDictionary = symptomService.findAll();
@@ -74,12 +78,8 @@ public class ChosenPatientController {
 	@PostMapping("/addToVisit")
 	public String addToVisit(HttpServletRequest request, Model model) {
 		String login = currentUserNameSimple(request);
-		DoctorDTO doctorDTO = doctorService.findDTObyUser(login);
-		visitDTO = new VisitDTO();
-		visitDTO.setDoctor(doctorDTO);
-		visitDTO.setPatient(scheduledVisit.getPatient());
-		visitDTO.setDate(scheduledVisit.getDate());
-		visitDTO = visitService.save(visitDTO);
+		visitDTO = visitService.createVisitDTO(login, scheduledVisit);
+		visitDTO.setId(visitService.save(visitDTO));
 		return "redirect:/chosenPatient.html";
 	}
 
@@ -89,14 +89,15 @@ public class ChosenPatientController {
 		return "redirect:/chosenPatient.html";
 
 	}
-	
+
 	@PostMapping("/chosenPatient/addMedicament")
-	public String addMedicamentToVisit(@ModelAttribute("medicament") MedicamentDTO medicamentDTO, int dosage, int frequency, String date) {
+	public String addMedicamentToVisit(@ModelAttribute("medicament") MedicamentDTO medicamentDTO, int dosage,
+			int frequency, String date) {
 		patientsMedicamentService.save(medicamentDTO, dosage, frequency, visitDTO, date);
 		return "redirect:/chosenPatient.html";
 
 	}
-	
+
 	@PostMapping("/chosenPatient/addDiagnosis")
 	public String addDiagnosisToVisit(String name, String details) {
 		diagnosisService.save(name, details, visitDTO);

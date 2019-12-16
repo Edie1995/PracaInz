@@ -24,19 +24,19 @@ import pl.kruko.PracaInz.repo.PatientsMedicamentRepository;
 @Service
 public class PatientsMedicamentService {
 
-	@Autowired
 	private VisitService visitService;
-	@Autowired
-	MedicamentService medicamentService;
+	private MedicamentService medicamentService;
+	private PatientsMedicamentRepository patientsMedicamentRepository;
 	private ModelMapper modelMapper = new ModelMapper();
 	private Type listType = new TypeToken<List<PatientsMedicamentDTO>>() {
 	}.getType();
 
-	private PatientsMedicamentRepository patientsMedicamentRepository;
-
 	@Autowired
-	public PatientsMedicamentService(PatientsMedicamentRepository patientsMedicamentRepository) {
+	public PatientsMedicamentService(VisitService visitService, MedicamentService medicamentService,
+			PatientsMedicamentRepository patientsMedicamentRepository) {
 		super();
+		this.visitService = visitService;
+		this.medicamentService = medicamentService;
 		this.patientsMedicamentRepository = patientsMedicamentRepository;
 	}
 
