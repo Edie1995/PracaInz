@@ -9,6 +9,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.Visit;
@@ -19,7 +20,7 @@ public class VisitService {
 
 	private PatientService patientService;
 	private VisitRepository visitRepository;
-	
+
 	private ModelMapper modelMapper = new ModelMapper();
 	private Type listType = new TypeToken<List<VisitDTO>>() {
 	}.getType();
@@ -34,29 +35,37 @@ public class VisitService {
 	public List<Visit> findByPatient(String login) {
 		Patient patient = getPatient(login);
 		List<Visit> visits = visitRepository.findByPatient(patient);
-//		List<VisitDTO> visitsDTO = modelMapper.map(visits, listType);
 		return visits;
 	}
 
-	
-	public List<VisitDTO> findByPatientAndDate(String login, LocalDate date){
+	public List<VisitDTO> findByPatientAndDate(String login, LocalDate date) {
 		Patient patient = getPatient(login);
 		List<Visit> visits = visitRepository.findByPatientAndDate(patient, date);
 		List<VisitDTO> visitsDTO = modelMapper.map(visits, listType);
 		return visitsDTO;
 	}
-	
-	public List<VisitDTO> findByPatientAndDateBetween(String login, LocalDate startDate, LocalDate endDate){
+
+	public List<VisitDTO> findByPatientAndDateBetween(String login, LocalDate startDate, LocalDate endDate) {
 		Patient patient = getPatient(login);
 		List<Visit> visits = visitRepository.findByPatientAndDateBetween(patient, startDate, endDate);
 		List<VisitDTO> visitsDTO = modelMapper.map(visits, listType);
 		return visitsDTO;
 	}
-	
-	
+
+	public VisitDTO save(VisitDTO visitDTO) {
+		Visit visit =  visitRepository.save(modelMapper.map(visitDTO, Visit.class));
+		VisitDTO visitBack = modelMapper.map(visit, VisitDTO.class);
+		return visitBack;
+	}
+
 	public Patient getPatient(String login) {
 		Patient patient = patientService.findByUser(login);
 		return patient;
 	}
 
+	public List<Visit> findByPatientDTO(PatientDTO patientDTO) {
+		Patient patient = modelMapper.map(patientDTO, Patient.class);
+		List<Visit> visits = visitRepository.findByPatient(patient);
+		return visits;
+	}
 }

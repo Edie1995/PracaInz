@@ -1,5 +1,7 @@
 package dataTransferObjects;
 
+import java.time.LocalDate;
+
 import pl.kruko.PracaInz.models.Status;
 
 public class PatientsMedicamentDTO implements Comparable<PatientsMedicamentDTO> {
@@ -10,10 +12,26 @@ public class PatientsMedicamentDTO implements Comparable<PatientsMedicamentDTO> 
 	private VisitDTO visit;
 	private MedicamentDTO medicament;
 	private Status status;
+	private LocalDate endTime;
 
 	public PatientsMedicamentDTO() {
 		// TODO Auto-generated constructor stub
 	}
+
+	
+
+	public PatientsMedicamentDTO(int dosage, int frequency, VisitDTO visit, MedicamentDTO medicament, Status status,
+			LocalDate endTime) {
+		super();
+		this.dosage = dosage;
+		this.frequency = frequency;
+		this.visit = visit;
+		this.medicament = medicament;
+		this.status = status;
+		this.endTime = endTime;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -62,10 +80,24 @@ public class PatientsMedicamentDTO implements Comparable<PatientsMedicamentDTO> 
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+
+	public LocalDate getEndTime() {
+		return endTime;
+	}
+
+
+
+	public void setEndTime(LocalDate endTime) {
+		this.endTime = endTime;
+	}
+
+
 
 	@Override
 	public int compareTo(PatientsMedicamentDTO o) {
 		return this.visit.compareTo(o.getVisit());
 	}
+	
 
 }

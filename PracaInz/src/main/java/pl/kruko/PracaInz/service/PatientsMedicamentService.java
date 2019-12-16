@@ -1,6 +1,7 @@
 package pl.kruko.PracaInz.service;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,10 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.MedicamentDTO;
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.PatientsMedicamentDTO;
+import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Medicament;
 import pl.kruko.PracaInz.models.PatientsMedicament;
 import pl.kruko.PracaInz.models.Status;
@@ -98,6 +102,25 @@ public class PatientsMedicamentService {
 		List<PatientsMedicamentDTO> patientsMedicamentDTO = modelMapper.map(patientsMedicaments, listType);
 		Collections.sort(patientsMedicamentDTO);
 		return patientsMedicamentDTO;
+	}
+
+	public List<PatientsMedicamentDTO> findAllByPatientDTO(PatientDTO patientDTO) {
+		List<Visit> visits = visitService.findByPatientDTO(patientDTO);
+		List<PatientsMedicament> patientsMedicaments = new ArrayList<>();
+		for (Visit v : visits) {
+			patientsMedicaments.addAll(patientsMedicamentRepository.findByVisit(v));
+		}
+		List<PatientsMedicamentDTO> patientsMedicamentDTO = modelMapper.map(patientsMedicaments, listType);
+		Collections.sort(patientsMedicamentDTO);
+		return patientsMedicamentDTO;
+	}
+
+	public void save(MedicamentDTO medicamentDTO, int dosage, int frequency, VisitDTO visitDTO, String endDateString) {
+		LocalDate date = LocalDate.parse(endDateString);
+		PatientsMedicamentDTO patientMedicamentDTO = new PatientsMedicamentDTO(dosage, frequency, visitDTO,
+				medicamentDTO, Status.ACTIVE, date);
+		patientsMedicamentRepository.save(modelMapper.map(patientMedicamentDTO, PatientsMedicament.class));
+
 	}
 
 }

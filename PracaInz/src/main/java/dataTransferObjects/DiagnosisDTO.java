@@ -14,6 +14,15 @@ public class DiagnosisDTO implements Comparable<DiagnosisDTO>{
 		// TODO Auto-generated constructor stub
 	}
 	
+		
+	public DiagnosisDTO(String name, String details, VisitDTO visit, Status status) {
+		super();
+		this.name = name;
+		this.details = details;
+		this.visit = visit;
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}

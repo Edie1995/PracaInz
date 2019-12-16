@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name = "Institution")
 @Table(name = "institutions")
 public class Institution {
@@ -26,6 +28,7 @@ public class Institution {
 	private Long phoneNumber;
 	private Status status;
 	@ManyToMany
+	@JsonIgnoreProperties(value="institutions")
 	private List<Doctor> doctors;
 
 	public Institution() {
@@ -88,10 +91,10 @@ public class Institution {
 		this.doctors = doctors;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Institution [id=" + id + ", name=" + name + ", adress=" + adress + ", phoneNumber=" + phoneNumber
-//				+ ", status=" + status + ", doctors=" + doctors + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Institution [id=" + id + ", name=" + name + ", adress=" + adress + ", phoneNumber=" + phoneNumber
+				+ ", status=" + status + "]";
+	}
 
 }

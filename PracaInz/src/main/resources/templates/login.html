@@ -4,6 +4,7 @@
 <head>
 <title>Home</title>
 <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
 </head>
 
 <body>
@@ -13,7 +14,7 @@
 
 
 	<h1>
-		Witaj <br> w systemie wspomagaj¹cym <br> Twoje zdrowie!
+		Witaj <br> w systemie wspomagajÄ…cym <br> Twoje zdrowie!
 	</h1>
 	<main class="helloImg">
 		<p th:if="${loginError}" class="error">Wrong username or password</p>
@@ -28,7 +29,7 @@
 					id="logIn"></li>
 			</ul>
 		</form>
-		<form class="register" th:action="@{/login.html}" method="post">
+		<form class="register" method="post">
 		<ul class="register">
 			<li><input class="button" type="submit" value="zarejestruj"
 				id="register"></li>

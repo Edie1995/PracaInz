@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.Institution;
 import pl.kruko.PracaInz.models.Specialization;
+import pl.kruko.PracaInz.models.User;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
 
@@ -19,4 +20,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
 	List<Doctor> findByNameAndSpecialization(String lastName, Specialization specialization);
 	List<Doctor> findByLastName(String lastName);
 	List<Doctor> findAll();
+	Doctor findByUser(User user);
 }

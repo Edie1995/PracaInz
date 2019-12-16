@@ -47,9 +47,8 @@ public class PatientSymptom {
 		this.symptom = symptom;
 	}
 
-	public PatientSymptom(Long id, LocalDate date, Patient patient, Symptom symptom, Visit visit) {
+	public PatientSymptom(LocalDate date, Patient patient, Symptom symptom, Visit visit) {
 		super();
-		this.id = id;
 		this.date = date;
 		this.patient = patient;
 		this.symptom = symptom;

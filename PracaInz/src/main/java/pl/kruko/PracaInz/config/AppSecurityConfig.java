@@ -1,3 +1,4 @@
+
 package pl.kruko.PracaInz.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,39 +86,31 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 //	          .and()
 //	          .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
 //	    }
-	
-	
-	
-	 
-	    @Override
-	    protected void configure(final HttpSecurity http) throws Exception {
-	        http
-	          .csrf().disable()
-	          .authorizeRequests()
-	          .antMatchers("/admin/**").hasRole("ADMIN")
-	          .antMatchers("/anonymous*").anonymous()
-	          .antMatchers("/login*").permitAll()
-	          .antMatchers("/templates*").permitAll()
-	          .antMatchers("/home*").permitAll()
-	          .antMatchers("/css/**").permitAll()
-	          .anyRequest().authenticated()
-	          .and()
-	          .formLogin()
-	          .loginPage("/login.html")
-//	          .loginProcessingUrl("/home")
-	          .defaultSuccessUrl("/patientHome.html", true)
-	          .failureUrl("/login-error.html")
-//	          .failureHandler(authenticationFailureHandler())
-	          .and()
-	          .logout()
-	          .logoutUrl("/logout")
-	          .deleteCookies("JSESSIONID");
-//	          .logoutSuccessHandler(logoutSuccessHandler());
-	    }
-	     
-	    @Bean
-	    public PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+
+	@Override
+	protected void configure(final HttpSecurity http) throws Exception {
+		http.csrf().disable()
+		.authorizeRequests()
+		.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/patientHome/**").hasRole("PATIENT")
+				.antMatchers("/doctorHome/**").hasRole("DOCTOR")
+				.antMatchers("/anonymous*").anonymous().
+				antMatchers("/login*").permitAll()
+				.antMatchers("/templates*").permitAll()
+				.antMatchers("/css/**").permitAll().anyRequest()
+				.authenticated()
+				.and()
+				.formLogin().loginPage("/login.html")
+				.defaultSuccessUrl("/home")
+				.failureUrl("/login-error.html")
+				.and()
+				.logout()
+				.logoutUrl("/logout")
+				.deleteCookies("JSESSIONID");
 	}
 
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+}

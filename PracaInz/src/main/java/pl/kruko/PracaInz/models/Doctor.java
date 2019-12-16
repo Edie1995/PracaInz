@@ -25,14 +25,14 @@ public class Doctor extends Person{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = true)
-	private int telephoneNumber;
+	private Long telephoneNumber;
 	private Status status;
 	@ManyToOne
 	private Specialization specialization;
 	@ManyToMany(mappedBy = "doctors")
 	private List<Institution> institutions;
 	@OneToOne(mappedBy="doctor", fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL)
+            cascade =  CascadeType.MERGE)
 	@JsonIgnoreProperties(value="doctor")
 	private User user;
 	public Doctor() {
@@ -45,10 +45,10 @@ public class Doctor extends Person{
 		this.id = id;
 	}
 
-	public int getTelephoneNumber() {
+	public Long getTelephoneNumber() {
 		return telephoneNumber;
 	}
-	public void setTelephoneNumber(int telephoneNumber) {
+	public void setTelephoneNumber(Long telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
 	public Status getStatus() {
@@ -75,11 +75,11 @@ public class Doctor extends Person{
 	public void setUser(User user) {
 		this.user = user;
 	}
-//	@Override
-//	public String toString() {
-//		return "Doctor [id=" + id + ", telephoneNumber=" + telephoneNumber + ", status=" + status + ", specializtaion="
-//				+ specializtaion + ", institutions=" + institutions + ", user=" + user + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Doctor [id=" + id + ", telephoneNumber=" + telephoneNumber + ", status=" + status + ", specializtaion="
+				+ specialization ;
+	}
 //	
 	
 }

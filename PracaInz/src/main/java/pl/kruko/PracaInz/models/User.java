@@ -20,10 +20,8 @@ public class User {
 	private String login;
 	private String password;
 	@OneToOne(optional = true)
-	@JsonIgnoreProperties(value = "user")
 	private Doctor doctor;
 	@OneToOne(optional = true)
-	@JsonIgnoreProperties(value = "user")
 	private Patient patient;
 
 	private Role role;
@@ -75,10 +73,10 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-//	@Override
-//	public String toString() {
-//		return "User [id=" + id + ", login=" + login + ", password=" + password + ", doctor=" + doctor + ", patient="
-//				+ patient + ", role=" + role + "]";
-//	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", login=" + login + ", password=" + password + ", doctor=" + doctor + ", patient="
+				+ patient + ", role=" + role + "]";
+	}
 
 }

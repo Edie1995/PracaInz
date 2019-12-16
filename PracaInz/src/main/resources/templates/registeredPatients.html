@@ -1,0 +1,74 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/profileStyle.css">
+<title>Profil</title>
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a href="">Profil</a></li>
+			<li><a href="">Wyloguj</a></li>
+		</ul>
+
+
+	</header>
+	<div>
+		<ul class="homeCheckList">
+
+			<li><a th:href="@{/homeRegisteredPatient.html}">Zarejestrowani</a></li>
+			<li><a href="">Grafik</a></li>
+		</ul>
+
+	</div>
+	<main>
+		<ul>
+
+			<li><form th:action="@{/registeredPatients/search}"
+					method="post">
+					<input type="date" class="text" id="date" name="date" required>
+					<input type="submit" class="button" name="search" value="Zmień">
+				</form></li>
+			<li><p th:utext="${chosenDate}"></p></li>
+
+		</ul>
+
+		<ul>
+
+			<li th:each="visit, v:${visits}">
+
+				<form th:action="@{/registeredPatients/getPatient}" method="post">
+					<table>
+						<tr>
+							<td th:value="${visit.getDate().toLocalTime()}"
+								th:utext="${visit.getDate().toLocalTime()}"></td>
+							<td th:text="${v.count}" th:value="${visit.getVisitType()}"
+								th:utext="${visit.getVisitType().getName()}"></td>
+							<td th:value="${visit.getPatient().getFirstName()}"
+								th:utext="${visit.getPatient().getFirstName()}"></td>
+							<td th:value="${visit.getPatient().getLastName()}"
+								th:utext="${visit.getPatient().getLastName()}"></td>
+							<td th:value="${visit.getInstitution()}"
+								th:utext="${visit.getInstitution()}"></td>
+							<td><input name="docorIdx" th:value="${v.index}"
+								type="submit" th:utext="wybierz"></td>
+						</tr>
+
+					</table>
+				</form>
+
+
+
+			</li>
+		</ul>
+
+	</main>
+	<img src="css/img/Profile.png" alt="pacjent profil">
+</body>
+
+</html>

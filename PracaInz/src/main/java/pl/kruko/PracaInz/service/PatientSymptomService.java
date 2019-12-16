@@ -12,11 +12,14 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dataTransferObjects.PatientDTO;
 import dataTransferObjects.PatientSymptomDTO;
 import dataTransferObjects.SymptomDTO;
+import dataTransferObjects.VisitDTO;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.PatientSymptom;
 import pl.kruko.PracaInz.models.Symptom;
+import pl.kruko.PracaInz.models.Visit;
 import pl.kruko.PracaInz.repo.PatientSymptomRepository;
 
 @Service
@@ -74,8 +77,17 @@ public class PatientSymptomService {
 		return patientSymptomDTO;
 	}
 
-	public List<PatientSymptomDTO> findByPatientAndSymptomAndDate(String login, SymptomDTO symptomDTO,
-			LocalDate date) {
+	public List<PatientSymptomDTO> findByPatientDTO(PatientDTO patientDTO) {
+		Patient patient = modelMapper.map(patientDTO, Patient.class);
+		;
+		patientSymptoms = patientSymptomRepository.findAllByPatient(patient);
+		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
+		Collections.sort(patientSymptomDTO);
+		System.out.println(patientSymptomDTO);
+		return patientSymptomDTO;
+	}
+
+	public List<PatientSymptomDTO> findByPatientAndSymptomAndDate(String login, SymptomDTO symptomDTO, LocalDate date) {
 		Patient patient = getPatient(login);
 		Symptom symptom = getSymptom(symptomDTO);
 		patientSymptoms = patientSymptomRepository.findAllByPatientAndSymptomAndDate(patient, symptom, date);
@@ -123,6 +135,17 @@ public class PatientSymptomService {
 				dateEnd);
 		List<PatientSymptomDTO> patientSymptomDTO = modelMapper.map(patientSymptoms, listType);
 		return patientSymptomDTO;
+
+	}
+
+	public void saveSymptomByVisit(SymptomDTO symptomDTO, VisitDTO visitDTO, String dateString) {
+		LocalDate date = LocalDate.parse(dateString);
+		Symptom symptom = modelMapper.map(symptomDTO, Symptom.class);
+		Visit visit = modelMapper.map(visitDTO, Visit.class);
+		System.out.println(visit.toString());
+		PatientSymptom patientSymptom = new PatientSymptom(date, visit.getPatient(), symptom,
+				visit);
+		patientSymptomRepository.save(patientSymptom);
 
 	}
 

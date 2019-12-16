@@ -64,7 +64,7 @@ public class Patient extends Person{
 
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", mail=" + mail + ", pesel=" + pesel + ", user=" + user + "]";
+		return "Patient [id=" + id + ", mail=" + mail + ", pesel=" + pesel + "]";
 	}
 	
 	

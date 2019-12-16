@@ -1,5 +1,7 @@
 package pl.kruko.PracaInz.models;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class PatientsMedicament {
 	@ManyToOne
 	private Medicament medicament;
 	private Status status;
+	private LocalDate endTime;
 		
 	public PatientsMedicament() {
 		
@@ -75,6 +78,15 @@ public class PatientsMedicament {
 		this.status = status;
 	}
 
+	public LocalDate getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(LocalDate endTime) {
+		this.endTime = endTime;
+	}
+
+	
 //	@Override
 //	public String toString() {
 //		return "PatientsMedicament [id=" + id + ", dosage=" + dosage + ", frequency=" + frequency + ", visit=" + visit

@@ -1,0 +1,144 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="css/chosenPatient.css">
+<title>Home</title>
+</head>
+
+<body>
+	<header>
+		<img src="css/img/logo.png" alt="application logo">
+		<ul>
+			<li><a th:href="@{/doctorProfile.html}">Profil</a></li>
+			<li><a th:href="@{/logout}">Wyloguj</a></li>
+		</ul>
+
+
+	</header>
+	<div>
+		<ul class="homeCheckList">
+
+			<li><a th:href="@{/homeRegisteredPatient.html}">Zarejestrowani</a>
+			</li>
+			<li><a href="">Grafik</a></li>
+
+
+		</ul>
+
+	</div>
+
+	<main class="doctorHomePage">
+
+		<ul>
+			<li><h4 class="text" th:utext="${patient.getFirstName()}"></h4>
+				<h4 class="text" th:utext="${patient.getLastName()}"></h4>
+				<h4 th:utext="${patient.getSex()}"></h4>
+				<h4 th:utext="${patient.getBDate()}"></h4></li>
+			<li><form th:action="@{/addToVisit}" method="post">
+					<input type="submit" class="button" value="potwierdź wizytę">
+				</form></li>
+		</ul>
+		<div>
+			<a href="#item1">objawy</a> <a href="#item2">leczenie</a> <a
+				href="#item3">choroby</a> <a href="#default">wyczyść</a>
+		</div>
+		<div class="items">
+			<div id="item1">
+				<form th:action="@{/chosenPatient/addSymptom}"
+					th:object="${symptomName}" method="post">
+					<ul>
+						<li><select th:field="*{id}" required>
+								<option value=""></option>
+								<option th:each="symptom: ${symptomsDic}"
+									th:value="${symptom.getId()}" th:utext="${symptom.getName()}"></option>
+						</select></li>
+						<li><input type="date" name="date" required></li>
+
+						<li><input class="button" type="submit" name="addSymptom"
+							value="Dodaj"></li>
+					</ul>
+				</form>
+				<table>
+					<tr>
+						<th>Objaw</th>
+						<th>Data</th>
+						<th>Wizyta</th>
+					</tr>
+					<tr th:each="symptom: ${symptoms}">
+						<td th:text="${symptom.getSymptomName()}" />
+						<td th:text="${symptom.getDate()}" />
+						<td th:text="${symptom.getVisitName()}" />
+					</tr>
+				</table>
+			</div>
+			<div id="item2">
+				<form th:action="@{/chosenPatient/addMedicament}"
+					th:object="${medicament}" method="post">
+					<ul>
+						<li><select th:field="*{id}" required>
+								<option value=""></option>
+								<option th:each="med: ${medicamentDic}"
+									th:value="${med.getId()}"
+									th:utext="${med.getName()} + ' ' + ${med.getProducent()} + ' ' + ${med.getDose()}"></option>
+						</select></li>
+						<li><input type="date" name="date" required></li>
+						<li><input type="number" name="dosage" required></li>
+						<li><input type="number" name="frequency" required></li>
+						<li><input class="button" type="submit" name="addMedicament"
+							value="Dodaj"></li>
+					</ul>
+				</form>
+				<table>
+					<tr>
+						<th>Nazwa leku</th>
+						<th>Dawka</th>
+						<th>Dzienne dawkowanie</th>
+					</tr>
+					<tr th:each="medicament:${medicaments}">
+						<td th:text="${medicament.getMedicament().getName()}" />
+						<td th:text="${medicament.getDosage()} + ' mg'" />
+						<td th:text="${medicament.getFrequency()} +' razy dziennie'" />
+					</tr>
+				</table>
+			</div>
+			<div id="item3">
+				<form th:action="@{/chosenPatient/addDiagnosis}"
+					 method="post">
+					<ul>
+						<li><input type="text" name="name" required></li>
+						<li><input type="text" name="details" required></li>
+						<li><input class="button" type="submit" name="addMedicament"
+							value="Dodaj"></li>
+					</ul>
+				</form>
+				<table>
+					<tr>
+						<th>Nazwa</th>
+						<th>Szczegóły</th>
+						<th>Data diagnozy</th>
+						<th>Status</th>
+					</tr>
+					<tr th:each="diag:${diagnosis}">
+						<td th:text="${diag.getName()}" />
+						<td th:text="${diag.getDetails()}" />
+						<td th:text="${diag.getVisit().getDate().toLocalDate()}" />
+						<td th:text="${diag.getStatus()}" />
+					</tr>
+				</table>
+			</div>
+			<div id="default"></div>
+		</div>
+		<img src="css/img/patientHome.png" alt="lekarz strona startowa">
+	</main>
+
+	<!-- <footer>
+        <p class="copywright">
+            Copywright Krukowska 2019
+        </p>
+    </footer> -->
+</body>
+
+</html>

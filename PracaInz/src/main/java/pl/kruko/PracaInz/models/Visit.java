@@ -49,10 +49,9 @@ public class Visit {
 		this.doctor = doctor;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Visit [id=" + id + ", date=" + date + ", patient=" + patient + ", doctor=" + doctor + "]";
-//	}
-//	
+	@Override
+	public String toString() {
+		return "Visit [id=" + id + ", date=" + date + ", patient=" + patient + ", doctor=" + doctor + "]";
+	}
 	
 }

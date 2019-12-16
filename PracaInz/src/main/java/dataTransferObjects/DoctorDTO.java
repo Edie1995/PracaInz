@@ -7,7 +7,7 @@ import pl.kruko.PracaInz.models.Status;
 
 public class DoctorDTO extends Person{
 	private Long id;
-	private int telephoneNumber;
+	private Long telephoneNumber;
 	private Status status;
 	private SpecializationDTO specializtaion;
 	private List<InstitutionDTO> institutions;
@@ -24,11 +24,11 @@ public class DoctorDTO extends Person{
 		this.id = id;
 	}
 
-	public int getTelephoneNumber() {
+	public Long getTelephoneNumber() {
 		return telephoneNumber;
 	}
 
-	public void setTelephoneNumber(int telephoneNumber) {
+	public void setTelephoneNumber(Long telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
 

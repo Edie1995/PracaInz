@@ -18,6 +18,7 @@ import dataTransferObjects.InstitutionDTO;
 import dataTransferObjects.PatientDTO;
 import dataTransferObjects.ScheduledVisitDTO;
 import dataTransferObjects.VisitTypeDTO;
+import pl.kruko.PracaInz.models.Doctor;
 import pl.kruko.PracaInz.models.Patient;
 import pl.kruko.PracaInz.models.ScheduledVisit;
 import pl.kruko.PracaInz.models.VisitType;
@@ -31,8 +32,8 @@ public class ScheduledVisitService {
 	private VisitTypeService visitTypeService;
 	@Autowired
 	private DoctorService doctorService;
-	@Autowired
-	private InstitutionService institutionService;
+//	@Autowired
+//	private InstitutionService institutionService;
 
 	@Autowired
 	private ScheduledVisitRepository scheduledVisitRepository;
@@ -134,6 +135,17 @@ public class ScheduledVisitService {
 			}
 		}
 		return dates;
+	}
+
+	public List<ScheduledVisitDTO> findByDoctorAndDate(String login, LocalDate dateString) {
+		LocalDateTime dateStart = dateString.atStartOfDay();
+		LocalDateTime dateEnd = dateString.plusDays(1).atStartOfDay();
+		Doctor doctor = doctorService.findByUser(login);
+		List<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findByDoctorAndDateBetween(doctor, dateStart,
+				dateEnd);
+		List<ScheduledVisitDTO> scheduledVisitsDTO = modelMapper.map(scheduledVisits, listType);
+		Collections.sort(scheduledVisitsDTO);
+		return scheduledVisitsDTO;
 	}
 
 }
